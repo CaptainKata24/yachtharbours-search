@@ -1,8 +1,3 @@
-{}
-```
-
-5. Click **Commit changes**
-
-Then go back to **vercel.com/new**, import **yachtharbours-search** again and use the name:
-```
-yh-search-2026
+{
+  "version": 2
+}
