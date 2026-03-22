@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Yacht Harbours — Find Your Marina</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy:#0a1628; --deep:#0d1f3c; --ocean:#0e4272; --teal:#0b7a8a;
+  --gold:#c9993c; --gold-lt:#e8c06a; --cream:#f5f0e8; --white:#ffffff;
+  --mist:rgba(255,255,255,0.07); --border:rgba(201,153,60,0.25);
+  --shadow:0 24px 64px rgba(0,0,0,0.45); --r:12px;
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+}
+body { font-family:'DM Sans',sans-serif; background:var(--navy); color:var(--cream); min-height:100vh; overflow-x:hidden; }
+.hero { position:relative; min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:2rem 1.5rem 5rem; overflow:hidden; }
+.hero-bg { position:absolute; inset:0; z-index:0; background: radial-gradient(ellipse 120% 80% at 50% 110%,rgba(14,66,114,0.55) 0%,transparent 60%), radial-gradient(ellipse 70% 50% at 80% 20%,rgba(11,122,138,0.18) 0%,transparent 55%), linear-gradient(175deg,#0a1628 0%,#0d1f3c 50%,#071220 100%); }
+.hero-bg::after { content:''; position:absolute; inset:0; background-image:repeating-linear-gradient(0deg,transparent,transparent 38px,rgba(201,153,60,0.032) 38px,rgba(201,153,60,0.032) 39px); animation:waterDrift 20s linear infinite; }
+@keyframes waterDrift { from{background-position:0 0} to{background-position:0 120px} }
+.hero-content { position:relative; z-index:1; text-align:center; max-width:780px; width:100%; animation:fadeUp 0.8s ease both; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(26px)} to{opacity:1;transform:translateY(0)} }
+.tagline { font-size:0.7rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; font-weight:500; }
+.hero h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2.4rem,6.5vw,4.8rem); font-weight:300; line-height:1.08; color:var(--white); margin-bottom:0.5rem; }
+.hero h1 em { font-style:italic; color:var(--gold-lt); }
+.hero-sub { font-size:0.92rem; color:rgba(245,240,232,0.55); margin-bottom:2.5rem; font-weight:300; }
+.gps-strip { display:flex; justify-content:center; margin-bottom:1.4rem; }
+.gps-btn { display:inline-flex; align-items:center; gap:0.55rem; padding:0.55rem 1.4rem; background:rgba(11,122,138,0.18); border:1px solid rgba(11,122,138,0.55); border-radius:100px; color:#5dd6e4; font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500; cursor:pointer; transition:all 0.2s; letter-spacing:0.04em; }
+.gps-btn:hover { background:rgba(11,122,138,0.32); border-color:rgba(11,122,138,0.9); }
+.gps-btn.locating { animation:gpsPulse 1.2s ease infinite; }
+@keyframes gpsPulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+.gps-btn.found { background:rgba(11,122,138,0.35); border-color:#5dd6e4; color:#5dd6e4; }
+.gps-dot { width:8px; height:8px; border-radius:50%; background:#5dd6e4; flex-shrink:0; }
+.gps-dot.pulse { animation:dotPulse 1.2s ease infinite; }
+@keyframes dotPulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.6);opacity:0.5} }
+.location-toast { position:fixed; top:1.2rem; left:50%; transform:translateX(-50%) translateY(-80px); background:linear-gradient(135deg,rgba(11,122,138,0.95),rgba(14,66,114,0.95)); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border:1px solid rgba(93,214,228,0.35); border-radius:100px; padding:0.6rem 1.4rem; display:flex; align-items:center; gap:0.7rem; font-size:0.82rem; color:var(--white); z-index:9999; transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space:nowrap; box-shadow:0 8px 32px rgba(0,0,0,0.4); }
+.location-toast.show { transform:translateX(-50%) translateY(0); }
+.toast-flag { font-size:1.2rem; }
+.search-card { background:rgba(13,31,60,0.88); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid var(--border); border-radius:var(--r); padding:1.6rem 1.8rem; box-shadow:var(--shadow),0 0 0 1px rgba(201,153,60,0.07); width:100%; max-width:720px; margin:0 auto; animation:fadeUp 0.8s 0.15s ease both; }
+.search-label { font-size:0.68rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold); margin-bottom:0.9rem; font-weight:500; display:block; }
+.keyword-row { display:flex; gap:0.6rem; margin-bottom:1rem; }
+.keyword-wrap { flex:1; position:relative; }
+.keyword-wrap .icon { position:absolute; left:1rem; top:50%; transform:translateY(-50%); color:var(--gold); opacity:0.7; pointer-events:none; width:18px; height:18px; }
+.keyword-input { width:100%; height:52px; background:var(--mist); border:1px solid var(--border); border-radius:8px; color:var(--white); font-family:'DM Sans',sans-serif; font-size:0.94rem; padding:0 1rem 0 2.8rem; outline:none; transition:border-color 0.2s,box-shadow 0.2s; }
+.keyword-input::placeholder { color:rgba(245,240,232,0.33); }
+.keyword-input:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,153,60,0.12); }
+.search-btn { height:52px; padding:0 1.6rem; background:linear-gradient(135deg,var(--gold) 0%,#a8782a 100%); border:none; border-radius:8px; color:var(--navy); font-family:'DM Sans',sans-serif; font-size:0.86rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition:transform 0.15s,box-shadow 0.15s,filter 0.15s; display:flex; align-items:center; gap:0.5rem; }
+.search-btn:hover { filter:brightness(1.1); transform:translateY(-1px); box-shadow:0 6px 20px rgba(201,153,60,0.35); }
+.search-btn:active { transform:translateY(0); }
+.filter-row { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; }
+@media (max-width:480px) { .filter-row{grid-template-columns:1fr} .keyword-row{flex-wrap:wrap} .search-btn{width:100%;justify-content:center} }
+.select-wrap { position:relative; }
+.select-wrap .sel-icon { position:absolute; left:1rem; top:50%; transform:translateY(-50%); color:var(--gold); opacity:0.75; pointer-events:none; width:16px; height:16px; }
+.select-wrap .chevron { position:absolute; right:0.9rem; top:50%; transform:translateY(-50%); color:rgba(245,240,232,0.4); pointer-events:none; width:14px; height:14px; }
+.custom-select { appearance:none; width:100%; height:48px; background:var(--mist); border:1px solid var(--border); border-radius:8px; color:var(--white); font-family:'DM Sans',sans-serif; font-size:0.88rem; padding:0 2.4rem 0 2.8rem; outline:none; cursor:pointer; transition:border-color 0.2s,box-shadow 0.2s; }
+.custom-select option { background:var(--deep); color:var(--white); }
+.custom-select:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,153,60,0.12); }
+.flag-select-wrap .custom-select { padding-left:4.2rem; }
+.flag-preview { position:absolute; left:2.8rem; top:50%; transform:translateY(-50%); font-size:1.1rem; pointer-events:none; z-index:2; }
+.divider { display:flex; align-items:center; gap:1.2rem; margin:3rem auto 1.8rem; max-width:960px; padding:0 1.5rem; }
+.divider-line { flex:1; height:1px; background:var(--border); }
+.divider-label { font-family:'Cormorant Garamond',serif; font-size:1.45rem; font-style:italic; color:var(--gold-lt); white-space:nowrap; font-weight:300; }
+.region-section { max-width:960px; margin:0 auto; padding:0 1.5rem 0.8rem; }
+.section-eyebrow { font-size:0.66rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); font-weight:500; margin-bottom:0.9rem; }
+.pill-track-wrap { position:relative; }
+.pill-track-wrap::after { content:''; position:absolute; top:0; right:0; bottom:0.5rem; width:56px; background:linear-gradient(to right,transparent,var(--navy)); pointer-events:none; }
+.region-track { display:flex; gap:0.6rem; overflow-x:auto; padding-bottom:0.5rem; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+.region-track::-webkit-scrollbar { display:none; }
+.region-pill { flex:0 0 auto; scroll-snap-align:start; display:flex; align-items:center; gap:0.5rem; padding:0.5rem 1rem; background:var(--mist); border:1px solid var(--border); border-radius:100px; font-size:0.83rem; color:rgba(245,240,232,0.72); cursor:pointer; transition:all 0.2s; white-space:nowrap; }
+.region-pill:hover,.region-pill.active { background:rgba(201,153,60,0.15); border-color:var(--gold); color:var(--gold-lt); }
+.region-pill.active { font-weight:500; }
+.count-badge { display:inline-flex; align-items:center; background:rgba(201,153,60,0.15); border:1px solid rgba(201,153,60,0.28); border-radius:100px; font-size:0.62rem; color:var(--gold); padding:0.1rem 0.45rem; margin-left:0.3rem; font-weight:600; }
+.carousel-section { max-width:960px; margin:1.6rem auto 0; padding:0 1.5rem 2rem; }
+.carousel-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; }
+.carousel-nav { display:flex; gap:0.5rem; }
+.nav-btn { width:36px; height:36px; background:var(--mist); border:1px solid var(--border); border-radius:50%; color:var(--cream); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; font-size:1rem; }
+.nav-btn:hover { background:rgba(201,153,60,0.2); border-color:var(--gold); color:var(--gold); }
+.nav-btn:disabled { opacity:0.28; cursor:default; }
+.carousel-track-wrap { overflow:hidden; }
+.carousel-track { display:flex; gap:1rem; transition:transform 0.42s cubic-bezier(0.25,0.46,0.45,0.94); }
+.country-card { flex:0 0 calc(20% - 0.8rem); min-width:148px; background:rgba(13,31,60,0.72); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; cursor:pointer; transition:transform 0.22s,box-shadow 0.22s,border-color 0.22s; position:relative; }
+@media (max-width:900px) { .country-card{flex:0 0 calc(25% - 0.75rem)} }
+@media (max-width:660px) { .country-card{flex:0 0 calc(33.333% - 0.67rem);min-width:118px} }
+@media (max-width:440px) { .country-card{flex:0 0 calc(50% - 0.5rem)} }
+.country-card:hover { transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,0.45); border-color:var(--gold); }
+.country-card:hover .card-overlay { opacity:1; }
+.country-card.near-me { border-color:#5dd6e4; box-shadow:0 0 0 2px rgba(93,214,228,0.25); }
+.near-badge { position:absolute; top:0.4rem; right:0.4rem; background:#0b7a8a; border-radius:100px; font-size:0.58rem; color:#fff; padding:0.15rem 0.5rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; z-index:2; }
+.flag-wrap { width:100%; aspect-ratio:3/2; overflow:hidden; background:var(--deep); position:relative; }
+.card-flag { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.3s; }
+.country-card:hover .card-flag { transform:scale(1.04); }
+.flag-emoji-fb { position:absolute; inset:0; display:none; align-items:center; justify-content:center; font-size:2.8rem; }
+.card-body { padding:0.65rem 0.75rem; }
+.card-country { font-size:0.8rem; font-weight:500; color:var(--white); margin-bottom:0.15rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.card-marinas { font-size:0.68rem; color:var(--gold); }
+.card-dist { font-size:0.65rem; color:#5dd6e4; margin-top:0.1rem; }
+.card-overlay { position:absolute; inset:0; background:linear-gradient(135deg,rgba(201,153,60,0.08),rgba(11,122,138,0.08)); opacity:0; transition:opacity 0.2s; pointer-events:none; }
+.chart-panel { position:fixed; inset:0; z-index:8000; display:flex; align-items:flex-end; justify-content:center; pointer-events:none; opacity:0; transition:opacity 0.3s; }
+.chart-panel.open { pointer-events:all; opacity:1; }
+.chart-backdrop { position:absolute; inset:0; background:rgba(7,18,32,0.82); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); cursor:pointer; }
+.chart-sheet { position:relative; z-index:1; width:100%; max-width:860px; background:var(--deep); border:1px solid var(--border); border-radius:20px 20px 0 0; padding:0 0 calc(1.5rem + var(--safe-bottom)); box-shadow:0 -24px 80px rgba(0,0,0,0.6); transform:translateY(100%); transition:transform 0.42s cubic-bezier(0.34,1.1,0.64,1); max-height:90svh; overflow:hidden; display:flex; flex-direction:column; }
+.chart-panel.open .chart-sheet { transform:translateY(0); }
+.sheet-handle { width:38px; height:4px; background:rgba(201,153,60,0.35); border-radius:100px; margin:0.8rem auto 0; cursor:pointer; }
+.sheet-header { display:flex; align-items:center; justify-content:space-between; padding:1rem 1.4rem 0.6rem; }
+.sheet-title-wrap { display:flex; align-items:center; gap:0.8rem; }
+.sheet-flag { font-size:2rem; }
+.sheet-title { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:300; color:var(--white); }
+.sheet-sub { font-size:0.75rem; color:rgba(245,240,232,0.5); margin-top:0.1rem; }
+.sheet-close { width:34px; height:34px; background:var(--mist); border:1px solid var(--border); border-radius:50%; color:var(--cream); cursor:pointer; font-size:1.1rem; display:flex; align-items:center; justify-content:center; transition:all 0.2s; flex-shrink:0; }
+.sheet-close:hover { background:rgba(201,153,60,0.2); border-color:var(--gold); color:var(--gold); }
+.chart-tabs { display:flex; gap:0; border-bottom:1px solid var(--border); padding:0 1.4rem; }
+.chart-tab { padding:0.6rem 1.1rem; font-size:0.78rem; font-weight:500; cursor:pointer; color:rgba(245,240,232,0.45); border-bottom:2px solid transparent; margin-bottom:-1px; transition:all 0.2s; }
+.chart-tab.active { color:var(--gold); border-bottom-color:var(--gold); }
+.chart-body { flex:1; overflow-y:auto; min-height:0; }
+#chartMap { width:100%; height:340px; background:#0d2640; }
+@media (max-width:600px) { #chartMap{height:260px} }
+.leaflet-tile-pane { filter:hue-rotate(180deg) invert(1) brightness(0.88) contrast(1.05); }
+.leaflet-control-zoom a { background:var(--deep)!important; color:var(--gold)!important; border-color:var(--border)!important; }
+.marina-list { padding:0.8rem 1.4rem; }
+.marina-item { display:flex; align-items:center; gap:0.9rem; padding:0.75rem 0; border-bottom:1px solid rgba(201,153,60,0.1); cursor:pointer; transition:background 0.15s; border-radius:6px; }
+.marina-item:last-child { border-bottom:none; }
+.marina-item:hover { background:var(--mist); padding-left:0.5rem; padding-right:0.5rem; margin:0 -0.5rem; }
+.marina-dot { width:8px; height:8px; border-radius:50%; background:var(--teal); flex-shrink:0; }
+.marina-dot.gold { background:var(--gold); }
+.marina-info { flex:1; min-width:0; }
+.marina-name { font-size:0.85rem; font-weight:500; color:var(--white); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.marina-loc { font-size:0.72rem; color:rgba(245,240,232,0.45); margin-top:0.1rem; }
+.marina-berths { font-size:0.72rem; color:var(--gold); margin-left:auto; white-space:nowrap; flex-shrink:0; }
+.chart-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.stat-box { padding:0.8rem 1rem; text-align:center; border-right:1px solid var(--border); }
+.stat-box:last-child { border-right:none; }
+.stat-num { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:300; color:var(--gold-lt); }
+.stat-lbl { font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(245,240,232,0.4); margin-top:0.1rem; }
+.pop-label { font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(245,240,232,0.38); margin-top:2rem; text-align:center; }
+.pop-row { display:flex; flex-wrap:wrap; justify-content:center; gap:0.45rem; margin:0.7rem auto 4rem; padding:0 1.5rem; max-width:760px; }
+.pop-tag { font-size:0.78rem; padding:0.28rem 0.85rem; border:1px solid var(--border); border-radius:100px; color:rgba(245,240,232,0.5); cursor:pointer; transition:all 0.18s; }
+.pop-tag:hover { color:var(--gold-lt); border-color:var(--gold); background:rgba(201,153,60,0.08); }
+.bottom-bar { position:fixed; bottom:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--teal),var(--gold),var(--ocean)); background-size:200% 100%; animation:shimmer 4s linear infinite; }
+@keyframes shimmer { 0%{background-position:0% 0%} 100%{background-position:200% 0%} }
+body.panel-open { overflow:hidden; }
+</style>
+</head>
+<body>
+<div class="location-toast" id="locToast">
+  <span class="toast-flag" id="toastFlag">📍</span>
+  <span id="toastMsg">Locating you…</span>
+</div>
+
+<div class="chart-panel" id="chartPanel">
+  <div class="chart-backdrop" onclick="closeChart()"></div>
+  <div class="chart-sheet" id="chartSheet">
+    <div class="sheet-handle" onclick="closeChart()"></div>
+    <div class="sheet-header">
+      <div class="sheet-title-wrap">
+        <span class="sheet-flag" id="sheetFlag">⚓</span>
+        <div>
+          <div class="sheet-title" id="sheetTitle">Country</div>
+          <div class="sheet-sub" id="sheetSub">Select a tab to explore</div>
+        </div>
+      </div>
+      <button class="sheet-close" onclick="closeChart()">✕</button>
+    </div>
+    <div class="chart-tabs">
+      <div class="chart-tab active" onclick="switchTab('chart',this)">⚓ Chart</div>
+      <div class="chart-tab" onclick="switchTab('marinas',this)">⛵ Marinas</div>
+      <div class="chart-tab" onclick="switchTab('stats',this)">📊 Stats</div>
+    </div>
+    <div class="chart-body">
+      <div id="tab-chart"><div id="chartMap"></div></div>
+      <div id="tab-marinas" style="display:none"><div class="marina-list" id="marinaList"></div></div>
+      <div id="tab-stats" style="display:none">
+        <div class="chart-stats">
+          <div class="stat-box"><div class="stat-num" id="statMarinas">—</div><div class="stat-lbl">Marinas</div></div>
+          <div class="stat-box"><div class="stat-num" id="statBerths">—</div><div class="stat-lbl">Berths</div></div>
+          <div class="stat-box"><div class="stat-num" id="statRegion">—</div><div class="stat-lbl">Region</div></div>
+        </div>
+        <div class="marina-list" id="statsList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="tagline">⚓ Global Marina Marketplace</p>
+    <h1>Find Your Perfect<br><em>Harbour</em></h1>
+    <p class="hero-sub">Search over 12,000 marinas, yacht clubs &amp; anchorages worldwide</p>
+    <div class="gps-strip">
+      <button class="gps-btn" id="gpsBtn" onclick="gpsLocate()">
+        <span class="gps-dot" id="gpsDot"></span>
+        <span id="gpsBtnText">Use My Location</span>
+      </button>
+    </div>
+    <div class="search-card">
+      <span class="search-label">Search Marinas</span>
+      <div class="keyword-row">
+        <div class="keyword-wrap">
+          <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input class="keyword-input" type="text" placeholder="Marina name, port or city…" id="kw">
+        </div>
+        <button class="search-btn" onclick="doSearch()">
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          Search
+        </button>
+      </div>
+      <div class="filter-row">
+        <div class="select-wrap">
+          <svg class="sel-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <select class="custom-select" id="regionSelect" onchange="onRegionChange()">
+            <option value="">All Regions</option>
+            <option value="mediterranean">Mediterranean</option>
+            <option value="caribbean">Caribbean</option>
+            <option value="northern-europe">Northern Europe</option>
+            <option value="north-america">North America</option>
+            <option value="south-america">South America</option>
+            <option value="pacific">Pacific</option>
+            <option value="indian-ocean">Indian Ocean</option>
+            <option value="middle-east">Middle East</option>
+            <option value="southeast-asia">Southeast Asia</option>
+            <option value="australia-nz">Australia &amp; NZ</option>
+            <option value="africa">Africa</option>
+          </select>
+          <svg class="chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="select-wrap flag-select-wrap">
+          <svg class="sel-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+          <span class="flag-preview" id="flagPreview">🌐</span>
+          <select class="custom-select" id="countrySelect" onchange="onCountryChange()">
+            <option value="" data-flag="🌐">All Countries</option>
+          </select>
+          <svg class="chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <span class="divider-label">Explore by Region</span>
+  <div class="divider-line"></div>
+</div>
+
+<div class="region-section">
+  <p class="section-eyebrow">Select a cruising region</p>
+  <div class="pill-track-wrap">
+    <div class="region-track" id="regionTrack">
+      <div class="region-pill active" data-region="" onclick="selectRegion(this,'')">🌍 All Regions</div>
+      <div class="region-pill" data-region="mediterranean" onclick="selectRegion(this,'mediterranean')">🏖️ Mediterranean <span class="count-badge">3,240</span></div>
+      <div class="region-pill" data-region="caribbean" onclick="selectRegion(this,'caribbean')">🌴 Caribbean <span class="count-badge">1,180</span></div>
+      <div class="region-pill" data-region="northern-europe" onclick="selectRegion(this,'northern-europe')">⛵ N. Europe <span class="count-badge">2,870</span></div>
+      <div class="region-pill" data-region="north-america" onclick="selectRegion(this,'north-america')">🗽 N. America <span class="count-badge">2,100</span></div>
+      <div class="region-pill" data-region="pacific" onclick="selectRegion(this,'pacific')">🌊 Pacific <span class="count-badge">640</span></div>
+      <div class="region-pill" data-region="australia-nz" onclick="selectRegion(this,'australia-nz')">🦘 Aus &amp; NZ <span class="count-badge">820</span></div>
+      <div class="region-pill" data-region="indian-ocean" onclick="selectRegion(this,'indian-ocean')">🐠 Indian Ocean <span class="count-badge">310</span></div>
+      <div class="region-pill" data-region="middle-east" onclick="selectRegion(this,'middle-east')">⛵ Middle East <span class="count-badge">290</span></div>
+      <div class="region-pill" data-region="southeast-asia" onclick="selectRegion(this,'southeast-asia')">🌺 SE Asia <span class="count-badge">450</span></div>
+      <div class="region-pill" data-region="south-america" onclick="selectRegion(this,'south-america')">🦜 S. America <span class="count-badge">380</span></div>
+      <div class="region-pill" data-region="africa" onclick="selectRegion(this,'africa')">🌅 Africa <span class="count-badge">210</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="carousel-section">
+  <div class="carousel-header">
+    <p class="section-eyebrow" id="carouselLabel">Countries — All Regions</p>
+    <div class="carousel-nav">
+      <button class="nav-btn" id="prevBtn" onclick="slide(-1)">&#8592;</button>
+      <button class="nav-btn" id="nextBtn" onclick="slide(1)">&#8594;</button>
+    </div>
+  </div>
+  <div class="carousel-track-wrap">
+    <div class="carousel-track" id="carouselTrack"></div>
+  </div>
+</div>
+
+<p class="pop-label">Popular destinations</p>
+<div class="pop-row" id="popRow"></div>
+<div class="bottom-bar"></div>
+<script>
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+function ensureAudio() { if (!audioCtx) audioCtx = new AudioCtx(); }
+function playTick(pitch=1200,vol=0.18,dur=0.018) {
+  try {
+    ensureAudio();
+    if (audioCtx.state==='suspended') audioCtx.resume();
+    const osc=audioCtx.createOscillator(), gain=audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.type='sine';
+    osc.frequency.setValueAtTime(pitch,audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(pitch*0.55,audioCtx.currentTime+dur);
+    gain.gain.setValueAtTime(vol,audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001,audioCtx.currentTime+dur);
+    osc.start(audioCtx.currentTime); osc.stop(audioCtx.currentTime+dur);
+  } catch(e) {}
+}
+function playChime() { [880,1108].forEach((f,i)=>setTimeout(()=>playTick(f,0.22,0.12),i*110)); }
+function playOpen() { playTick(660,0.15,0.08); }
+
+const COUNTRIES_ALL = [
+  {name:'Spain',flag:'🇪🇸',code:'ES',marinas:640,berths:52000,region:'mediterranean',lat:39.5,lng:-3.7},
+  {name:'France',flag:'🇫🇷',code:'FR',marinas:580,berths:48000,region:'mediterranean',lat:46.2,lng:2.2},
+  {name:'Italy',flag:'🇮🇹',code:'IT',marinas:720,berths:61000,region:'mediterranean',lat:41.9,lng:12.6},
+  {name:'Greece',flag:'🇬🇷',code:'GR',marinas:490,berths:38000,region:'mediterranean',lat:39.1,lng:21.8},
+  {name:'Croatia',flag:'🇭🇷',code:'HR',marinas:410,berths:33000,region:'mediterranean',lat:45.1,lng:15.2},
+  {name:'Turkey',flag:'🇹🇷',code:'TR',marinas:380,berths:29000,region:'mediterranean',lat:38.9,lng:35.2},
+  {name:'Montenegro',flag:'🇲🇪',code:'ME',marinas:95,berths:7200,region:'mediterranean',lat:42.7,lng:19.4},
+  {name:'Malta',flag:'🇲🇹',code:'MT',marinas:120,berths:9500,region:'mediterranean',lat:35.9,lng:14.5},
+  {name:'USA',flag:'🇺🇸',code:'US',marinas:1800,berths:160000,region:'north-america',lat:38.0,lng:-97.0},
+  {name:'Canada',flag:'🇨🇦',code:'CA',marinas:310,berths:28000,region:'north-america',lat:56.1,lng:-106.3},
+  {name:'UK',flag:'🇬🇧',code:'GB',marinas:750,berths:64000,region:'northern-europe',lat:55.4,lng:-3.4},
+  {name:'Netherlands',flag:'🇳🇱',code:'NL',marinas:680,berths:55000,region:'northern-europe',lat:52.1,lng:5.3},
+  {name:'Sweden',flag:'🇸🇪',code:'SE',marinas:620,berths:50000,region:'northern-europe',lat:60.1,lng:18.6},
+  {name:'Norway',flag:'🇳🇴',code:'NO',marinas:590,berths:47000,region:'northern-europe',lat:60.5,lng:8.5},
+  {name:'Denmark',flag:'🇩🇰',code:'DK',marinas:540,berths:43000,region:'northern-europe',lat:56.3,lng:9.5},
+  {name:'Germany',flag:'🇩🇪',code:'DE',marinas:480,berths:38000,region:'northern-europe',lat:51.2,lng:10.5},
+  {name:'Finland',flag:'🇫🇮',code:'FI',marinas:420,berths:34000,region:'northern-europe',lat:61.9,lng:25.7},
+  {name:'BVI',flag:'🇻🇬',code:'VG',marinas:140,berths:11000,region:'caribbean',lat:18.4,lng:-64.6},
+  {name:'Antigua',flag:'🇦🇬',code:'AG',marinas:90,berths:7000,region:'caribbean',lat:17.1,lng:-61.8},
+  {name:'Bahamas',flag:'🇧🇸',code:'BS',marinas:200,berths:16000,region:'caribbean',lat:25.0,lng:-77.4},
+  {name:'Martinique',flag:'🇲🇶',code:'MQ',marinas:55,berths:4200,region:'caribbean',lat:14.6,lng:-61.0},
+  {name:'Australia',flag:'🇦🇺',code:'AU',marinas:680,berths:56000,region:'australia-nz',lat:-25.3,lng:133.8},
+  {name:'New Zealand',flag:'🇳🇿',code:'NZ',marinas:140,berths:11500,region:'australia-nz',lat:-40.9,lng:174.9},
+  {name:'Thailand',flag:'🇹🇭',code:'TH',marinas:180,berths:14000,region:'southeast-asia',lat:15.9,lng:100.9},
+  {name:'Malaysia',flag:'🇲🇾',code:'MY',marinas:120,berths:9500,region:'southeast-asia',lat:4.2,lng:108.0},
+  {name:'Indonesia',flag:'🇮🇩',code:'ID',marinas:85,berths:6800,region:'southeast-asia',lat:-0.8,lng:113.9},
+  {name:'UAE',flag:'🇦🇪',code:'AE',marinas:190,berths:16000,region:'middle-east',lat:23.4,lng:53.8},
+  {name:'Oman',flag:'🇴🇲',code:'OM',marinas:70,berths:5500,region:'middle-east',lat:21.5,lng:55.9},
+  {name:'Maldives',flag:'🇲🇻',code:'MV',marinas:45,berths:3400,region:'indian-ocean',lat:3.2,lng:73.2},
+  {name:'Seychelles',flag:'🇸🇨',code:'SC',marinas:38,berths:2900,region:'indian-ocean',lat:-4.7,lng:55.5},
+  {name:'Brazil',flag:'🇧🇷',code:'BR',marinas:180,berths:15000,region:'south-america',lat:-14.2,lng:-51.9},
+  {name:'Argentina',flag:'🇦🇷',code:'AR',marinas:95,berths:7800,region:'south-america',lat:-38.4,lng:-63.6},
+  {name:'South Africa',flag:'🇿🇦',code:'ZA',marinas:110,berths:8900,region:'africa',lat:-30.6,lng:22.9},
+];
+
+const SAMPLE_MARINAS = {
+  ES:[{n:'Real Club Náutico de Palma',loc:'Palma, Mallorca',b:670},{n:'Port Adriano',loc:'El Toro, Mallorca',b:433},{n:'Marina Ibiza',loc:'Ibiza Town',b:672},{n:'Marina Marbella',loc:'Marbella',b:1164},{n:'Club Náutico Valencia',loc:'Valencia',b:750}],
+  FR:[{n:'Port Vieux — Antibes',loc:'Antibes, Côte d\'Azur',b:1600},{n:'Port de Monaco',loc:'Monaco',b:700},{n:'Marina de Marseille',loc:'Marseille',b:3000},{n:'Port de Saint-Tropez',loc:'Saint-Tropez',b:500},{n:'Port Camille Rayon',loc:'Golfe-Juan',b:1040}],
+  IT:[{n:'Portofino Marina',loc:'Portofino, Liguria',b:260},{n:'Marina di Roma',loc:'Rome, Lazio',b:1700},{n:'Porto di Amalfi',loc:'Amalfi',b:110},{n:'Marina di Venezia',loc:'Venice',b:1000},{n:'Marina di Punta Ala',loc:'Tuscany',b:720}],
+  GR:[{n:'Kalamaki Marina',loc:'Athens, Attica',b:1400},{n:'Zea Marina',loc:'Piraeus',b:325},{n:'Lefkas Marina',loc:'Lefkada Island',b:620},{n:'Gouvia Marina',loc:'Corfu',b:1000},{n:'Alimos Marina',loc:'Alimos, Athens',b:1000}],
+  HR:[{n:'ACI Marina Dubrovnik',loc:'Dubrovnik',b:366},{n:'ACI Marina Split',loc:'Split',b:362},{n:'Marina Hvar',loc:'Hvar Island',b:160},{n:'ACI Marina Šibenik',loc:'Šibenik',b:186},{n:'Marina Punat',loc:'Krk Island',b:800}],
+  GB:[{n:'Hamble Point Marina',loc:'Hamble, Hampshire',b:230},{n:'Brighton Marina',loc:'Brighton',b:1700},{n:'Deganwy Marina',loc:'Conwy, Wales',b:260},{n:'Ocean Village Marina',loc:'Southampton',b:500},{n:'Plymouth Yacht Haven',loc:'Plymouth',b:450}],
+  US:[{n:'Marina del Rey',loc:'Los Angeles, CA',b:5200},{n:'Annapolis City Marina',loc:'Annapolis, MD',b:240},{n:'Bahia Mar Yachting Center',loc:'Fort Lauderdale, FL',b:300},{n:'San Diego Bay Marina',loc:'San Diego, CA',b:1200},{n:'Newport Shipyard',loc:'Newport, RI',b:100}],
+  AU:[{n:'Rushcutters Bay Marina',loc:'Sydney, NSW',b:440},{n:'Royal Queensland Yacht Squadron',loc:'Brisbane, QLD',b:250},{n:'Sanctuary Cove Marine',loc:'Gold Coast, QLD',b:400},{n:'Fremantle Sailing Club',loc:'Fremantle, WA',b:800},{n:'Pittwater Marina',loc:'Newport, NSW',b:200}],
+  AE:[{n:'Dubai Marina Yacht Club',loc:'Dubai Marina',b:450},{n:'Abu Dhabi International Marine',loc:'Abu Dhabi',b:220},{n:'Yas Marina',loc:'Yas Island',b:143},{n:'Dubai Creek Marina',loc:'Old Dubai',b:230},{n:'Mina Seyahi Beach Resort',loc:'Dubai',b:500}],
+};
+
+const REGION_NAMES = {
+  '':'All Regions','mediterranean':'Mediterranean','caribbean':'Caribbean',
+  'northern-europe':'Northern Europe','north-america':'North America',
+  'pacific':'Pacific','australia-nz':'Australia & NZ','indian-ocean':'Indian Ocean',
+  'middle-east':'Middle East','southeast-asia':'Southeast Asia',
+  'south-america':'South America','africa':'Africa',
+};
+
+const POPULAR = ['Palma de Mallorca','Dubrovnik','Antibes','Piraeus','Gustavia','English Harbour','Marina Bay','Portofino','Marmaris','Road Town','Fort Lauderdale','Sydney'];
+
+let currentRegion='', carouselPos=0, activeChartCountry=null, leafletMap=null, userLat=null, userLng=null;
+
+function attachScrollTick(el) {
+  let lastIdx=0;
+  el.addEventListener('scroll',()=>{
+    const itemW=el.firstElementChild?el.firstElementChild.offsetWidth+8:164;
+    const idx=Math.round(el.scrollLeft/itemW);
+    if(idx!==lastIdx){ playTick(1100+idx*18,0.13,0.014); lastIdx=idx; }
+  },{passive:true});
+}
+
+function gpsLocate() {
+  if(!navigator.geolocation){alert('Geolocation not supported.');return;}
+  ensureAudio();
+  const btn=document.getElementById('gpsBtn'),dot=document.getElementById('gpsDot'),txt=document.getElementById('gpsBtnText');
+  btn.classList.add('locating'); dot.classList.add('pulse'); txt.textContent='Locating…';
+  showToast('📡','Acquiring GPS signal…');
+  navigator.geolocation.getCurrentPosition(pos=>{
+    userLat=pos.coords.latitude; userLng=pos.coords.longitude;
+    const nearest=findNearestCountry(userLat,userLng);
+    btn.classList.remove('locating'); btn.classList.add('found');
+    dot.classList.remove('pulse'); txt.textContent=`${nearest.flag} Near ${nearest.name}`;
+    playChime(); showToast(nearest.flag,`Found you near ${nearest.name}`);
+    document.querySelectorAll('.region-pill').forEach(p=>p.classList.toggle('active',p.dataset.region===nearest.region));
+    document.getElementById('regionSelect').value=nearest.region;
+    currentRegion=nearest.region;
+    buildCarousel(nearest.region); buildCountryDropdown(nearest.region);
+    setTimeout(()=>{
+      document.querySelectorAll('.country-card').forEach(c=>{
+        if(c.dataset.code===nearest.code){c.classList.add('near-me');c.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
+      });
+    },300);
+  },err=>{
+    btn.classList.remove('locating'); dot.classList.remove('pulse');
+    txt.textContent='Location unavailable';
+    showToast('⚠️','Could not get your location');
+    setTimeout(()=>{txt.textContent='Use My Location';btn.classList.remove('found');},3000);
+  },{timeout:10000,enableHighAccuracy:true});
+}
+
+function haversine(lat1,lng1,lat2,lng2) {
+  const R=6371,dLat=(lat2-lat1)*Math.PI/180,dLng=(lng2-lng1)*Math.PI/180;
+  const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
+  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+
+function findNearestCountry(lat,lng) {
+  let nearest=COUNTRIES_ALL[0],minD=Infinity;
+  COUNTRIES_ALL.forEach(c=>{const d=haversine(lat,lng,c.lat,c.lng);if(d<minD){minD=d;nearest={...c,dist:Math.round(d)};}});
+  return nearest;
+}
+
+let toastTimer;
+function showToast(flag,msg) {
+  const t=document.getElementById('locToast');
+  document.getElementById('toastFlag').textContent=flag;
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.add('show'); clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+function getCountries(region) { return region?COUNTRIES_ALL.filter(c=>c.region===region):COUNTRIES_ALL; }
+
+function buildCarousel(region) {
+  const data=getCountries(region),track=document.getElementById('carouselTrack');
+  track.innerHTML=''; carouselPos=0; track.style.transform='translateX(0)';
+  data.forEach(c=>{
+    const distKm=userLat!==null?haversine(userLat,userLng,c.lat,c.lng):null;
+    const card=document.createElement('div');
+    card.className='country-card'; card.dataset.code=c.code;
+    if(distKm!==null&&distKm<1200) card.classList.add('near-me');
+    const distHtml=distKm!==null?`<div class="card-dist">~${distKm<1000?Math.round(distKm)+' km':(distKm/1000).toFixed(1)+'k km'} away</div>`:'';
+    const nearBadge=(distKm!==null&&distKm<800)?'<span class="near-badge">Near You</span>':'';
+    card.innerHTML=`${nearBadge}<div class="flag-wrap"><img class="card-flag" src="https://flagcdn.com/w80/${c.code.toLowerCase()}.png" alt="${c.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="flag-emoji-fb">${c.flag}</div></div><div class="card-body"><div class="card-country">${c.name}</div><div class="card-marinas">${c.marinas.toLocaleString()} marinas</div>${distHtml}</div><div class="card-overlay"></div>`;
+    card.addEventListener('click',()=>{playOpen();openChart(c);});
+    track.appendChild(card);
+  });
+  document.getElementById('carouselLabel').textContent=`Countries — ${REGION_NAMES[region]}`;
+  updateNav();
+}
+
+function getCardW() { const f=document.getElementById('carouselTrack').firstElementChild; return f?f.offsetWidth+16:160; }
+function slide(dir) {
+  const track=document.getElementById('carouselTrack'),wrap=document.querySelector('.carousel-track-wrap');
+  const vis=Math.floor(wrap.offsetWidth/getCardW()),max=Math.max(0,track.children.length-vis);
+  carouselPos=Math.max(0,Math.min(carouselPos+dir,max));
+  track.style.transform=`translateX(-${carouselPos*getCardW()}px)`;
+  playTick(1000,0.12,0.015); updateNav(track.children.length,vis);
+}
+function updateNav(tot,vis) {
+  if(!tot){const t=document.getElementById('carouselTrack'),w=document.querySelector('.carousel-track-wrap');tot=t.children.length;vis=Math.floor(w.offsetWidth/getCardW());}
+  document.getElementById('prevBtn').disabled=carouselPos===0;
+  document.getElementById('nextBtn').disabled=carouselPos>=Math.max(0,tot-vis);
+}
+
+function selectRegion(el,region) {
+  document.querySelectorAll('.region-pill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active'); currentRegion=region;
+  document.getElementById('regionSelect').value=region;
+  playTick(900,0.14,0.02); buildCarousel(region); buildCountryDropdown(region);
+}
+function onRegionChange() {
+  const r=document.getElementById('regionSelect').value; currentRegion=r;
+  document.querySelectorAll('.region-pill').forEach(p=>p.classList.toggle('active',p.dataset.region===r));
+  playTick(900,0.14,0.02); buildCarousel(r); buildCountryDropdown(r);
+}
+function buildCountryDropdown(region) {
+  const sel=document.getElementById('countrySelect'),list=getCountries(region);
+  sel.innerHTML=`<option value="" data-flag="🌐">All Countries</option>`;
+  list.forEach(c=>{const opt=document.createElement('option');opt.value=c.code;opt.dataset.flag=c.flag;opt.textContent=`${c.flag}  ${c.name}  (${c.marinas.toLocaleString()})`;sel.appendChild(opt);});
+  document.getElementById('flagPreview').textContent='🌐';
+}
+function onCountryChange() {
+  const sel=document.getElementById('countrySelect'),opt=sel.options[sel.selectedIndex];
+  document.getElementById('flagPreview').textContent=opt.dataset.flag||'🌐';
+  playTick(1050,0.11,0.016);
+}
+
+function openChart(country) {
+  activeChartCountry=country;
+  document.getElementById('sheetFlag').textContent=country.flag;
+  document.getElementById('sheetTitle').textContent=country.name;
+  document.getElementById('sheetSub').textContent=`${country.marinas.toLocaleString()} marinas · ${country.berths.toLocaleString()} berths`;
+  document.getElementById('statMarinas').textContent=country.marinas.toLocaleString();
+  document.getElementById('statBerths').textContent=(country.berths/1000).toFixed(0)+'k';
+  document.getElementById('statRegion').textContent=REGION_NAMES[country.region].split(' ')[0];
+  document.getElementById('statsList').innerHTML=`
+    <div class="marina-item"><div class="marina-dot gold"></div><div class="marina-info"><div class="marina-name">Region</div><div class="marina-loc">${REGION_NAMES[country.region]}</div></div></div>
+    <div class="marina-item"><div class="marina-dot gold"></div><div class="marina-info"><div class="marina-name">Avg Berths per Marina</div><div class="marina-loc">${Math.round(country.berths/country.marinas)} berths</div></div></div>
+    <div class="marina-item"><div class="marina-dot"></div><div class="marina-info"><div class="marina-name">Coordinates</div><div class="marina-loc">${country.lat.toFixed(1)}° ${country.lng.toFixed(1)}°</div></div></div>`;
+  const marinas=SAMPLE_MARINAS[country.code]||[];
+  document.getElementById('marinaList').innerHTML=marinas.length
+    ?marinas.map(m=>`<div class="marina-item"><div class="marina-dot"></div><div class="marina-info"><div class="marina-name">${m.n}</div><div class="marina-loc">${m.loc}</div></div><div class="marina-berths">${m.b.toLocaleString()} berths</div></div>`).join('')
+    :'<div style="padding:1.2rem;color:rgba(245,240,232,0.4);font-size:0.85rem">Marina data loading…</div>';
+  switchTab('chart',document.querySelector('.chart-tab'));
+  document.body.classList.add('panel-open');
+  document.getElementById('chartPanel').classList.add('open');
+  setTimeout(()=>initMap(country),380);
+}
+
+function closeChart() {
+  document.getElementById('chartPanel').classList.remove('open');
+  document.body.classList.remove('panel-open');
+  playTick(600,0.1,0.02);
+}
+
+function initMap(country) {
+  const el=document.getElementById('chartMap');
+  if(leafletMap){leafletMap.remove();leafletMap=null;}
+  leafletMap=L.map('chartMap',{zoomControl:true,attributionControl:false}).setView([country.lat,country.lng],country.code==='US'||country.code==='AU'?4:6);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18}).addTo(leafletMap);
+  const icon=L.divIcon({html:`<div style="font-size:1.8rem;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.5))">${country.flag}</div>`,iconSize:[32,32],iconAnchor:[16,16],className:''});
+  L.marker([country.lat,country.lng],{icon}).addTo(leafletMap).bindPopup(`<b>${country.name}</b><br>${country.marinas.toLocaleString()} marinas`);
+  const marinas=SAMPLE_MARINAS[country.code]||[];
+  marinas.forEach(m=>{
+    // TODO (dev team): replace with real API coords
+    const lat=country.lat+(Math.random()-0.5)*3,lng=country.lng+(Math.random()-0.5)*4;
+    const mIcon=L.divIcon({html:`<div style="width:10px;height:10px;background:#c9993c;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.4)"></div>`,iconSize:[10,10],iconAnchor:[5,5],className:''});
+    L.marker([lat,lng],{icon:mIcon}).addTo(leafletMap).bindPopup(`<b>${m.n}</b><br>${m.loc}<br>${m.b.toLocaleString()} berths`);
+  });
+  if(userLat!==null){
+    const uIcon=L.divIcon({html:`<div style="width:14px;height:14px;background:#5dd6e4;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 4px rgba(93,214,228,0.3)"></div>`,iconSize:[14,14],iconAnchor:[7,7],className:''});
+    L.marker([userLat,userLng],{icon:uIcon}).addTo(leafletMap).bindPopup('📍 Your Location');
+  }
+}
+
+function switchTab(tab,el) {
+  document.querySelectorAll('.chart-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  document.getElementById('tab-chart').style.display=tab==='chart'?'':'none';
+  document.getElementById('tab-marinas').style.display=tab==='marinas'?'':'none';
+  document.getElementById('tab-stats').style.display=tab==='stats'?'':'none';
+  playTick(950,0.1,0.014);
+  if(tab==='chart'&&leafletMap) setTimeout(()=>leafletMap.invalidateSize(),50);
+}
+
+function doSearch() {
+  const kw=document.getElementById('kw').value.trim();
+  const region=document.getElementById('regionSelect').value;
+  const country=document.getElementById('countrySelect').value;
+  playChime();
+  const params=new URLSearchParams();
+  if(kw) params.set('q',kw);
+  if(region) params.set('region',region);
+  if(country) params.set('country',country);
+  const searchBase='https://www.yachtharbours.com/search';
+  const target=params.toString()?`${searchBase}?${params.toString()}`:searchBase;
+  const btn=document.querySelector('.search-btn'),orig=btn.innerHTML;
+  btn.innerHTML='✓ Searching…';
+  btn.style.background='linear-gradient(135deg,#0b7a8a,#0e4272)';
+  btn.style.color='#fff';
+  setTimeout(()=>{ btn.innerHTML=orig; btn.style.cssText=''; window.location.href=target; },600);
+}
+
+function buildPopular() {
+  const row=document.getElementById('popRow');
+  POPULAR.forEach(dest=>{
+    const tag=document.createElement('span');
+    tag.className='pop-tag'; tag.textContent=dest;
+    tag.onclick=()=>{document.getElementById('kw').value=dest;playTick(1000,0.12,0.015);doSearch();};
+    row.appendChild(tag);
+  });
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') closeChart();
+  if(e.key==='Enter'&&document.activeElement.id==='kw') doSearch();
+  if(document.getElementById('chartPanel').classList.contains('open')) return;
+  if(e.key==='ArrowLeft') slide(-1);
+  if(e.key==='ArrowRight') slide(1);
+});
+
+let touchSX=null;
+document.getElementById('carouselTrack').addEventListener('touchstart',e=>{touchSX=e.touches[0].clientX;},{passive:true});
+document.getElementById('carouselTrack').addEventListener('touchend',e=>{
+  if(touchSX===null) return;
+  const d=touchSX-e.changedTouches[0].clientX;
+  if(Math.abs(d)>38) slide(d>0?1:-1);
+  touchSX=null;
+},{passive:true});
+
+window.addEventListener('resize',()=>{
+  carouselPos=0;
+  document.getElementById('carouselTrack').style.transform='translateX(0)';
+  updateNav();
+  if(leafletMap) leafletMap.invalidateSize();
+});
+
+buildCarousel('');
+buildCountryDropdown('');
+buildPopular();
+attachScrollTick(document.getElementById('regionTrack'));
+</script>
+</body>
+</html>  
