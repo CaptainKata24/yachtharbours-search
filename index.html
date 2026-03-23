@@ -212,15 +212,7 @@ input:-webkit-autofill,.si:-webkit-autofill{-webkit-box-shadow:0 0 0 100px #0718
     <div class="hero-rule"><div class="hero-line"></div><span class="hero-anc">⚓</span><div class="hero-line"></div></div>
     <div class="hero-t">Find Your Perfect Berth<br>Around the
       <script>
-var LOGO_B64='';
-function loadLogo(){
-  fetch('https://raw.githubusercontent.com/CaptainKata24/yachtharbours-search/main/LOGO.png')
-    .then(function(r){return r.blob();})
-    .then(function(b){
-      var url=URL.createObjectURL(b);
-      document.getElementById('hdrLogo').src=url;
-      document.getElementById('drwLogo').src=url;
-    }).catch(function(){});
+
 }
 
 var _ac=null;
@@ -607,7 +599,7 @@ document.addEventListener('keydown',function(e){
 
 buildOpts();
 window.addEventListener('resize',resize);
-window.addEventListener('load',function(){setTimeout(resize,50);loadLogo();});
+window.addEventListener('load',function(){setTimeout(resize,50);;});
 resize();
 </script>
 </body>
