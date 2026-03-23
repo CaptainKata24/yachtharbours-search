@@ -4,35 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Yacht Harbours — Global Marina Marketplace</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --navy:#04111f;--deep:#071828;--mid:#0a2135;
-  --gold:#c9993c;--gold-lt:#e8c26a;--gold-dim:#7a5c10;
-  --cream:#f0ead8;--teal:#0b6880;
-  --border:rgba(201,153,60,0.22);--glass:rgba(4,17,31,0.94);
-  --r:10px;--hdr:60px;
-}
+:root{--navy:#04111f;--deep:#071828;--gold:#c9993c;--gold-lt:#e8c26a;--gold-dim:#7a5c10;--cream:#f0ead8;--border:rgba(201,153,60,0.22);--glass:rgba(4,17,31,0.94);--r:10px;--hdr:60px;}
 html,body{height:100%;overflow:hidden}
 body{font-family:"DM Sans",sans-serif;background:var(--navy);color:var(--cream);display:flex;flex-direction:column}
-.hdr{height:var(--hdr);flex-shrink:0;background:linear-gradient(90deg,#020c17,#071828,#030f1c);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 1rem;z-index:1000;box-shadow:0 2px 20px rgba(0,0,0,0.55);position:relative}
-.burger{width:38px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;background:rgba(201,153,60,0.07);border:1px solid rgba(201,153,60,0.18);border-radius:8px;transition:all 0.2s;flex-shrink:0;z-index:2}
+.hdr{height:var(--hdr);flex-shrink:0;background:linear-gradient(90deg,#020c17,#071828,#030f1c);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1rem;z-index:1000;box-shadow:0 2px 20px rgba(0,0,0,0.55);gap:0.8rem}
+.burger{width:38px;height:38px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;background:rgba(201,153,60,0.07);border:1px solid rgba(201,153,60,0.18);border-radius:8px;flex-shrink:0;transition:all 0.2s}
 .burger:hover{background:rgba(201,153,60,0.16);border-color:rgba(201,153,60,0.4)}
-.burger span{width:17px;height:1.5px;background:var(--gold);border-radius:2px;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);transform-origin:center;display:block}
+.burger span{width:17px;height:1.5px;background:var(--gold);border-radius:2px;transition:all 0.3s;transform-origin:center;display:block}
 .burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
 .burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
 .burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
-.logo-wrap{display:flex;align-items:center;gap:0.55rem;flex-shrink:0}
-.logo-img{width:34px;height:34px;filter:invert(78%) sepia(45%) saturate(500%) hue-rotate(5deg) brightness(95%)}
-.logo-text{display:flex;flex-direction:column}
-.logo-main{font-family:"Cinzel",serif;font-size:clamp(0.72rem,2vw,0.95rem);font-weight:500;color:var(--gold);letter-spacing:0.2em;text-transform:uppercase;line-height:1}
-.logo-sub{font-family:"Cormorant Garamond",serif;font-size:0.58rem;font-style:italic;color:rgba(201,153,60,0.48);letter-spacing:0.12em;margin-top:2px}
-.hdr-right{display:flex;align-items:center;justify-content:center;gap:0.55rem;z-index:2;flex:1;padding:0 0.5rem}
+.logo-wrap{display:flex;align-items:center;gap:0.5rem;flex-shrink:0;cursor:pointer}
+.logo-svg{width:32px;height:32px;flex-shrink:0}
+.logo-main{font-family:"Cinzel",serif;font-size:clamp(0.7rem,1.8vw,0.9rem);font-weight:500;color:var(--gold);letter-spacing:0.18em;text-transform:uppercase;line-height:1}
+.logo-sub{font-family:"Cormorant Garamond",serif;font-size:0.56rem;font-style:italic;color:rgba(201,153,60,0.46);letter-spacing:0.1em;margin-top:1px}
+.hdr-center{flex:1;display:flex;align-items:center;justify-content:center;gap:0.55rem}
+.gps-btn{flex-shrink:0;display:flex;align-items:center;gap:0.35rem;padding:0 0.85rem;height:38px;background:rgba(11,104,128,0.18);border:1px solid rgba(93,214,228,0.28);border-radius:100px;cursor:pointer;transition:all 0.2s}
+.gps-btn:hover{background:rgba(11,104,128,0.35);border-color:#5dd6e4}
+.gps-btn.loc{animation:gp 1s ease infinite}
+.gps-btn.fnd{border-color:#5dd6e4;background:rgba(11,104,128,0.4)}
+@keyframes gp{0%,100%{opacity:1}50%{opacity:0.3}}
+.gi{width:15px;height:15px;color:#5dd6e4;flex-shrink:0}
+.gps-lbl{font-size:0.75rem;font-weight:500;color:#5dd6e4;letter-spacing:0.08em}
 .sw{position:relative}
-.sr{display:flex;align-items:center;gap:0.45rem;background:rgba(255,255,255,0.05);border:1px solid rgba(201,153,60,0.28);border-radius:100px;height:38px;padding:0 0.85rem;cursor:text;transition:all 0.2s;width:clamp(220px,40vw,420px)}
-@media(max-width:540px){.sr{width:180px}}
-@media(max-width:360px){.sr{width:140px}}
+.sr{display:flex;align-items:center;gap:0.45rem;background:rgba(255,255,255,0.05);border:1px solid rgba(201,153,60,0.28);border-radius:100px;height:38px;padding:0 0.85rem;cursor:text;transition:all 0.2s;width:clamp(180px,35vw,400px)}
 .sr:focus-within{background:rgba(255,255,255,0.08);border-color:var(--gold);box-shadow:0 0 0 2px rgba(201,153,60,0.14)}
 .s-ico{width:13px;height:13px;color:var(--gold);opacity:0.6;flex-shrink:0}
 .sf{display:none;flex-shrink:0}
@@ -40,16 +38,15 @@ body{font-family:"DM Sans",sans-serif;background:var(--navy);color:var(--cream);
 .si{flex:1;background:none;border:none;outline:none;color:var(--cream);font-family:"DM Sans",sans-serif;font-size:0.82rem;min-width:0}
 .si::placeholder{color:rgba(240,234,216,0.28)}
 .si::-webkit-search-cancel-button{-webkit-appearance:none;display:none}
-input:-webkit-autofill,.si:-webkit-autofill{-webkit-box-shadow:0 0 0 100px #071828 inset!important;-webkit-text-fill-color:var(--cream)!important;caret-color:var(--cream)}
-.sc{background:none;border:none;color:rgba(240,234,216,0.3);font-size:1.05rem;cursor:pointer;padding:0;line-height:1;transition:color 0.15s;display:none}
+.sc{background:none;border:none;color:rgba(240,234,216,0.3);font-size:1.1rem;cursor:pointer;padding:0;line-height:1;display:none}
 .sc:hover{color:var(--gold)}
 .sv{width:12px;height:12px;color:rgba(240,234,216,0.25);flex-shrink:0;transition:transform 0.25s;pointer-events:none}
 .sw.open .sv{transform:rotate(180deg)}
-.sd{position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);width:clamp(280px,45vw,440px);background:rgba(3,13,28,0.99);border:1px solid var(--border);border-radius:var(--r);box-shadow:0 20px 60px rgba(0,0,0,0.8);max-height:min(340px,52vh);overflow-y:auto;z-index:9999;display:none;scrollbar-width:thin;scrollbar-color:rgba(201,153,60,0.25) transparent}
+.sd{position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);width:clamp(260px,45vw,440px);background:rgba(3,13,28,0.99);border:1px solid var(--border);border-radius:var(--r);box-shadow:0 20px 60px rgba(0,0,0,0.8);max-height:min(340px,52vh);overflow-y:auto;z-index:9999;display:none;scrollbar-width:thin;scrollbar-color:rgba(201,153,60,0.25) transparent}
 .sd::-webkit-scrollbar{width:3px}
 .sd::-webkit-scrollbar-thumb{background:rgba(201,153,60,0.3);border-radius:100px}
-.sw.open .sd{display:block;animation:dIn 0.2s cubic-bezier(0.34,1.2,0.64,1) both}
-@keyframes dIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.sw.open .sd{display:block;animation:dIn 0.2s ease both}
+@keyframes dIn{from{opacity:0;transform:translateX(-50%) translateY(-6px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 .so{display:flex;align-items:center;gap:0.65rem;padding:0.55rem 0.9rem;cursor:pointer;border-bottom:1px solid rgba(201,153,60,0.07);transition:background 0.1s}
 .so:last-child{border-bottom:none}
 .so:hover,.so.sel{background:rgba(201,153,60,0.1)}
@@ -61,19 +58,11 @@ input:-webkit-autofill,.si:-webkit-autofill{-webkit-box-shadow:0 0 0 100px #0718
 .oc{font-size:0.7rem;color:var(--gold);white-space:nowrap;flex-shrink:0}
 .onr{font-size:0.6rem;color:#5dd6e4;margin-left:0.3rem}
 .snr{padding:1rem;text-align:center;font-size:0.8rem;color:rgba(240,234,216,0.28);font-style:italic}
-.gps-btn{flex-shrink:0;display:flex;align-items:center;gap:0.35rem;padding:0 0.85rem;height:38px;background:rgba(11,104,128,0.18);border:1px solid rgba(93,214,228,0.28);border-radius:100px;cursor:pointer;transition:all 0.2s}
-.gps-btn:hover{background:rgba(11,104,128,0.35);border-color:#5dd6e4}
-.gps-btn.loc{animation:gp 1s ease infinite}
-.gps-btn.fnd{border-color:#5dd6e4;background:rgba(11,104,128,0.4)}
-.gi{width:15px;height:15px;color:#5dd6e4;flex-shrink:0}
-.gps-label{font-size:0.75rem;font-weight:500;color:#5dd6e4;letter-spacing:0.08em;font-family:"DM Sans",sans-serif}
-@keyframes gp{0%,100%{opacity:1}50%{opacity:0.3}}
-  .ov{position:fixed;inset:0;z-index:1999;background:rgba(1,8,18,0.78);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity 0.3s}
+.ov{position:fixed;inset:0;z-index:1999;background:rgba(1,8,18,0.78);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity 0.3s}
 .ov.open{opacity:1;pointer-events:all}
 .drw{position:fixed;top:0;left:0;bottom:0;width:min(288px,80vw);background:linear-gradient(155deg,#02080f,#071828,#04121e);border-right:1px solid var(--border);box-shadow:14px 0 50px rgba(0,0,0,0.75);z-index:2000;transform:translateX(-100%);transition:transform 0.38s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column}
 .drw.open{transform:translateX(0)}
 .drw-hdr{padding:1.2rem;border-bottom:1px solid rgba(201,153,60,0.14);display:flex;align-items:center;gap:0.65rem}
-.drw-logo-img{width:42px;height:42px;filter:invert(78%) sepia(45%) saturate(500%) hue-rotate(5deg) brightness(90%);flex-shrink:0}
 .drw-name{font-family:"Cinzel",serif;font-size:0.95rem;font-weight:500;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase}
 .drw-tag{font-family:"Cormorant Garamond",serif;font-size:0.7rem;font-style:italic;color:rgba(201,153,60,0.42);margin-top:2px}
 .drw-nav{flex:1;padding:0.8rem 0}
@@ -89,20 +78,19 @@ input:-webkit-autofill,.si:-webkit-autofill{-webkit-box-shadow:0 0 0 100px #0718
 .hero.gone{opacity:0}
 .hero-rule{display:flex;align-items:center;gap:0.7rem;justify-content:center;margin-bottom:0.55rem}
 .hero-line{width:34px;height:1px;background:rgba(201,153,60,0.32)}
-.hero-anc{font-size:0.82rem;color:rgba(201,153,60,0.42)}
 .hero-t{font-family:"Cinzel",serif;font-size:clamp(0.68rem,1.9vw,0.92rem);font-weight:400;color:rgba(201,153,60,0.62);letter-spacing:0.26em;text-transform:uppercase;text-shadow:0 2px 16px rgba(0,0,0,0.95);line-height:1.55}
 .hero-s{font-family:"Cormorant Garamond",serif;font-size:clamp(0.6rem,1.3vw,0.73rem);font-style:italic;color:rgba(201,153,60,0.35);letter-spacing:0.1em;margin-top:0.35rem;text-shadow:0 1px 8px rgba(0,0,0,0.95)}
 .map-ctrl{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:4px;z-index:10}
-.mc-btn{width:34px;height:34px;background:rgba(4,17,31,0.92);border:1px solid rgba(201,153,60,0.32);border-radius:8px;color:var(--gold);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.18s;font-family:"DM Sans",sans-serif;line-height:1}
+.mc-btn{width:34px;height:34px;background:rgba(4,17,31,0.92);border:1px solid rgba(201,153,60,0.32);border-radius:8px;color:var(--gold);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.18s;line-height:1}
 .mc-btn:hover{background:rgba(201,153,60,0.18);border-color:var(--gold)}
-.mc-btn.sm{font-size:0.62rem;line-height:1.2;color:rgba(201,153,60,0.6)}
-.map-popup{display:none;position:absolute;background:rgba(3,13,28,0.98);border:1px solid rgba(201,153,60,0.35);border-radius:10px;padding:10px 13px;font-size:11px;max-width:220px;pointer-events:none;z-index:20;box-shadow:0 8px 24px rgba(0,0,0,0.7)}
-.mp-name{color:var(--gold);font-weight:500;display:block;margin-bottom:3px;font-size:12px}
-.mp-loc{color:rgba(240,234,216,0.5);font-size:10px}
-.mp-berths{color:var(--gold);font-size:10px}
-.mp-tags{margin-top:4px}
+.mc-btn.sm{font-size:0.6rem;color:rgba(201,153,60,0.6)}
+.mpop{display:none;position:absolute;background:rgba(3,13,28,0.98);border:1px solid rgba(201,153,60,0.35);border-radius:10px;padding:10px 13px;font-size:11px;max-width:220px;pointer-events:none;z-index:20;box-shadow:0 8px 24px rgba(0,0,0,0.7)}
+.mp-n{color:var(--gold);font-weight:500;display:block;margin-bottom:3px;font-size:12px}
+.mp-l{color:rgba(240,234,216,0.5);font-size:10px}
+.mp-b{color:var(--gold);font-size:10px}
+.mp-t{margin-top:4px}
 .mp-tag{display:inline-block;font-size:9px;background:rgba(201,153,60,0.12);border:1px solid rgba(201,153,60,0.28);border-radius:10px;padding:1px 6px;color:var(--gold);margin:1px 2px 0 0}
-.badge{position:absolute;bottom:10px;left:10px;background:rgba(4,17,31,0.9);border:1px solid var(--border);border-radius:100px;padding:4px 10px;display:flex;align-items:center;gap:5px;font-size:10px;color:rgba(240,234,216,0.42);pointer-events:none;backdrop-filter:blur(8px);z-index:5}
+.badge{position:absolute;bottom:10px;left:10px;background:rgba(4,17,31,0.9);border:1px solid var(--border);border-radius:100px;padding:4px 10px;display:flex;align-items:center;gap:5px;font-size:10px;color:rgba(240,234,216,0.42);pointer-events:none;z-index:5}
 .badge-n{font-family:"Cinzel",serif;font-size:11px;color:var(--gold);font-weight:500}
 .sp{position:absolute;top:0;right:0;bottom:0;width:296px;background:var(--glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-left:1px solid var(--border);box-shadow:-10px 0 40px rgba(0,0,0,0.65);display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.42s cubic-bezier(0.34,1.06,0.64,1);z-index:400}
 .sp.open{transform:translateX(0)}
@@ -142,8 +130,7 @@ input:-webkit-autofill,.si:-webkit-autofill{-webkit-box-shadow:0 0 0 100px #0718
 .toast.show{transform:translateX(-50%) translateY(0)}
 .pgm{display:none;position:fixed;inset:0;z-index:3000;background:rgba(2,9,18,0.97);backdrop-filter:blur(8px);overflow-y:auto;padding:2rem 1.4rem 3rem}
 .pgm-in{max-width:580px;margin:0 auto}
-.pgm-back{background:none;border:1px solid rgba(201,153,60,0.32);border-radius:100px;color:var(--gold);padding:0.38rem 1rem;font-size:0.76rem;cursor:pointer;margin-bottom:1.4rem;font-family:"DM Sans",sans-serif;transition:all 0.2s}
-.pgm-back:hover{background:rgba(201,153,60,0.1)}
+.pgm-back{background:none;border:1px solid rgba(201,153,60,0.32);border-radius:100px;color:var(--gold);padding:0.38rem 1rem;font-size:0.76rem;cursor:pointer;margin-bottom:1.4rem;font-family:"DM Sans",sans-serif}
 .pg-h1{font-family:"Cinzel",serif;font-size:1.65rem;font-weight:400;color:var(--gold);letter-spacing:0.1em;margin-bottom:0.25rem}
 .pg-sub{font-size:0.74rem;color:rgba(240,234,216,0.36);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.8rem}
 .pg-p{font-family:"Cormorant Garamond",serif;font-size:1.05rem;font-weight:300;line-height:1.85;color:rgba(240,234,216,0.7);margin-bottom:1.1rem}
@@ -155,12 +142,11 @@ input:-webkit-autofill,.si:-webkit-autofill{-webkit-box-shadow:0 0 0 100px #0718
 </style>
 </head>
 <body>
-  <div class="toast" id="toast"><span id="tf">📍</span><span id="tm"></span></div>
-
+<div class="toast" id="toast"><span id="tf">📍</span><span id="tm"></span></div>
 <div class="ov" id="ov" onclick="closeNav()"></div>
 <div class="drw" id="drw">
   <div class="drw-hdr">
-    <img class="drw-logo-img" id="drwLogo" alt="Yacht Harbours">
+    <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="48" fill="#0a1628" stroke="#c9993c" stroke-width="2"/><path d="M50 15 Q28 32 18 50 Q28 68 50 85 Q72 68 82 50 Q72 32 50 15Z" fill="none" stroke="#c9993c" stroke-width="2.5"/><path d="M50 15 Q42 32 40 50 Q42 68 50 85 Q58 68 60 50 Q58 32 50 15Z" fill="#c9993c" opacity="0.3"/><path d="M18 50 Q32 42 50 40 Q68 42 82 50 Q68 58 50 60 Q32 58 18 50Z" fill="#c9993c" opacity="0.3"/><circle cx="50" cy="50" r="5" fill="#c9993c"/></svg>
     <div><div class="drw-name">Yacht Harbours</div><div class="drw-tag">Global Marina Marketplace</div></div>
   </div>
   <nav class="drw-nav">
@@ -175,29 +161,22 @@ input:-webkit-autofill,.si:-webkit-autofill{-webkit-box-shadow:0 0 0 100px #0718
   </nav>
   <div class="drw-ft">© 2025 Yacht Harbours · All rights reserved</div>
 </div>
-
 <header class="hdr">
   <div class="burger" id="burger" onclick="toggleNav()"><span></span><span></span><span></span></div>
-  <div class="logo-wrap" onclick="resetView()" style="cursor:pointer" title="Reset map">
-    <img class="logo-img" id="hdrLogo" alt="Yacht Harbours">
-    <div class="logo-text">
-      <div class="logo-main">Yacht Harbours</div>
-      <div class="logo-sub">Global Marina Marketplace</div>
-    </div>
+  <div class="logo-wrap" onclick="resetView()" title="Reset map">
+    <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="48" fill="none" stroke="#c9993c" stroke-width="2"/><path d="M50 15 Q28 32 18 50 Q28 68 50 85 Q72 68 82 50 Q72 32 50 15Z" fill="none" stroke="#c9993c" stroke-width="2"/><path d="M50 15 Q42 32 40 50 Q42 68 50 85 Q58 68 60 50 Q58 32 50 15Z" fill="#c9993c" opacity="0.3"/><path d="M18 50 Q32 42 50 40 Q68 42 82 50 Q68 58 50 60 Q32 58 18 50Z" fill="#c9993c" opacity="0.3"/><circle cx="50" cy="50" r="5" fill="#c9993c"/></svg>
+    <div class="logo-text"><div class="logo-main">Yacht Harbours</div><div class="logo-sub">Global Marina Marketplace</div></div>
   </div>
-  <div class="hdr-right">
-    <button class="gps-btn" id="gb" onclick="gpsGo()" title="Find nearest marina">
-      <svg class="gi" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-        <circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/>
-        <circle cx="12" cy="12" r="7" stroke-dasharray="2 2.5"/>
-      </svg>
-      <span class="gps-label">GPS</span>
+  <div class="hdr-center">
+    <button class="gps-btn" id="gb" onclick="gpsGo()">
+      <svg class="gi" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/><circle cx="12" cy="12" r="7" stroke-dasharray="2 2.5"/></svg>
+      <span class="gps-lbl">GPS</span>
     </button>
     <div class="sw" id="sw">
       <div class="sr" onclick="openDrop()">
         <svg class="s-ico" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
         <span class="sf" id="sf"></span>
-        <input class="si" id="si" type="search" placeholder="Search a country to find Yacht Harbours…" oninput="filt(this.value)" onfocus="openDrop()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true" data-form-type="other">
+        <input class="si" id="si" type="search" placeholder="Search a country to find Yacht Harbours…" oninput="filt(this.value)" onfocus="openDrop()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <button class="sc" id="sc" onclick="clr(event)">×</button>
         <svg class="sv" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
       </div>
@@ -205,401 +184,213 @@ input:-webkit-autofill,.si:-webkit-autofill{-webkit-box-shadow:0 0 0 100px #0718
     </div>
   </div>
 </header>
-
 <div class="map-wrap" id="mapWrap">
   <canvas id="wmap"></canvas>
   <div class="hero" id="hero">
-    <div class="hero-rule"><div class="hero-line"></div><span class="hero-anc">⚓</span><div class="hero-line"></div></div>
-    <div class="hero-t">Find Your Perfect Berth<br>Around the
-      <script>
-
-}
-
+    <div class="hero-rule"><div class="hero-line"></div><span style="color:rgba(201,153,60,0.42);font-size:0.82rem">⚓</span><div class="hero-line"></div></div>
+    <div class="hero-t">Find Your Perfect Berth<br>Around the World</div>
+    <div class="hero-s">Search any country · Tap any marina pin on the chart</div>
+  </div>
+  <div class="map-ctrl">
+    <button class="mc-btn" onclick="zoom(1.4)">+</button>
+    <button class="mc-btn" onclick="zoom(1/1.4)">−</button>
+    <button class="mc-btn sm" onclick="resetView()">⊙ All</button>
+  </div>
+  <div class="mpop" id="mpop"><span class="mp-n" id="mpN"></span><span class="mp-l" id="mpL"></span><br><span class="mp-b" id="mpB"></span><div class="mp-t" id="mpT"></div></div>
+  <div class="badge"><span class="badge-n">12,400+</span> marinas worldwide</div>
+  <div class="sp" id="sp">
+    <div class="ph">
+      <div class="pc"><div class="pf" id="pf"></div><div><div class="pn" id="pn"></div><div class="pr" id="pr"></div></div></div>
+      <div class="ps"><div class="pst">Marinas: <span id="pm">—</span></div><div class="pst">Berths: <span id="pb">—</span></div></div>
+      <button class="px" onclick="closePanel()">✕</button>
+    </div>
+    <div class="pnv" id="pnv"></div>
+    <div class="ml" id="ml"></div>
+  </div>
+</div>
+<div class="accent"></div>
+<div class="pgm" id="pgm">
+  <div class="pgm-in">
+    <button class="pgm-back" onclick="closePg()">← Back to Map</button>
+    <div id="pgc"></div>
+  </div>
+</div>
+<script>
 var _ac=null;
 function getAC(){if(!_ac){try{_ac=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}}if(_ac&&_ac.state==='suspended')_ac.resume();return _ac;}
 function tick(f,v,d){f=f||1100;v=v||0.14;d=d||0.016;try{var ctx=getAC();if(!ctx)return;var o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.type='sine';o.frequency.setValueAtTime(f,ctx.currentTime);o.frequency.exponentialRampToValueAtTime(f*0.5,ctx.currentTime+d);g.gain.setValueAtTime(v,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+d);o.start();o.stop(ctx.currentTime+d);}catch(e){}}
 function chime(){[880,1108,1320].forEach(function(f,i){setTimeout(function(){tick(f,0.17,0.1);},i*90);});}
 function blip(){tick(580,0.09,0.05);}
 function selSnd(){tick(960,0.13,0.02);}
-
 var COUNTRIES=[
-  {name:'Albania',flag:'🇦🇱',code:'AL',region:'Mediterranean',lat:41.33,lng:19.82,zoom:7,marinas:28,berths:2100},
-  {name:'Antigua & Barbuda',flag:'🇦🇬',code:'AG',region:'Caribbean',lat:17.12,lng:-61.85,zoom:11,marinas:12,berths:2200},
-  {name:'Argentina',flag:'🇦🇷',code:'AR',region:'South America',lat:-34.61,lng:-58.37,zoom:5,marinas:95,berths:7800},
-  {name:'Australia',flag:'🇦🇺',code:'AU',region:'Pacific',lat:-33.87,lng:151.21,zoom:5,marinas:680,berths:56000},
-  {name:'Bahamas',flag:'🇧🇸',code:'BS',region:'Caribbean',lat:25.08,lng:-77.35,zoom:7,marinas:85,berths:12000},
-  {name:'Bahrain',flag:'🇧🇭',code:'BH',region:'Middle East',lat:26.22,lng:50.59,zoom:10,marinas:22,berths:1700},
-  {name:'Barbados',flag:'🇧🇧',code:'BB',region:'Caribbean',lat:13.10,lng:-59.62,zoom:11,marinas:12,berths:1800},
-  {name:'Belgium',flag:'🇧🇪',code:'BE',region:'Northern Europe',lat:51.26,lng:2.90,zoom:9,marinas:55,berths:5500},
-  {name:'Brazil',flag:'🇧🇷',code:'BR',region:'South America',lat:-22.90,lng:-43.17,zoom:5,marinas:180,berths:15000},
-  {name:'BVI',flag:'🇻🇬',code:'VG',region:'Caribbean',lat:18.42,lng:-64.62,zoom:10,marinas:28,berths:3200},
-  {name:'Canada',flag:'🇨🇦',code:'CA',region:'North America',lat:43.64,lng:-79.38,zoom:4,marinas:310,berths:28000},
-  {name:'Chile',flag:'🇨🇱',code:'CL',region:'South America',lat:-33.45,lng:-70.67,zoom:5,marinas:68,berths:5200},
-  {name:'Croatia',flag:'🇭🇷',code:'HR',region:'Mediterranean',lat:43.52,lng:16.45,zoom:7,marinas:85,berths:18000},
-  {name:'Cyprus',flag:'🇨🇾',code:'CY',region:'Mediterranean',lat:34.92,lng:33.63,zoom:9,marinas:18,berths:3200},
-  {name:'Denmark',flag:'🇩🇰',code:'DK',region:'Northern Europe',lat:55.68,lng:12.57,zoom:6,marinas:540,berths:43000},
-  {name:'Egypt',flag:'🇪🇬',code:'EG',region:'Africa',lat:31.20,lng:29.92,zoom:7,marinas:45,berths:3500},
-  {name:'Estonia',flag:'🇪🇪',code:'EE',region:'Northern Europe',lat:59.44,lng:24.75,zoom:7,marinas:95,berths:7500},
-  {name:'Fiji',flag:'🇫🇯',code:'FJ',region:'Pacific',lat:-17.73,lng:178.42,zoom:9,marinas:22,berths:1800},
-  {name:'Finland',flag:'🇫🇮',code:'FI',region:'Northern Europe',lat:60.17,lng:24.94,zoom:6,marinas:420,berths:34000},
-  {name:'France',flag:'🇫🇷',code:'FR',region:'Mediterranean',lat:43.55,lng:7.02,zoom:8,marinas:580,berths:48000},
-  {name:'French Polynesia',flag:'🇵🇫',code:'PF',region:'Pacific',lat:-17.55,lng:-149.57,zoom:9,marinas:22,berths:1800},
-  {name:'Germany',flag:'🇩🇪',code:'DE',region:'Northern Europe',lat:54.32,lng:10.13,zoom:6,marinas:480,berths:38000},
-  {name:'Gibraltar',flag:'🇬🇮',code:'GI',region:'Mediterranean',lat:36.14,lng:-5.35,zoom:12,marinas:6,berths:900},
-  {name:'Greece',flag:'🇬🇷',code:'GR',region:'Mediterranean',lat:37.94,lng:23.73,zoom:6,marinas:62,berths:14000},
-  {name:'Grenada',flag:'🇬🇩',code:'GD',region:'Caribbean',lat:12.05,lng:-61.75,zoom:11,marinas:14,berths:1200},
-  {name:'Iceland',flag:'🇮🇸',code:'IS',region:'Northern Europe',lat:64.15,lng:-21.94,zoom:6,marinas:45,berths:3500},
-  {name:'Indonesia',flag:'🇮🇩',code:'ID',region:'Southeast Asia',lat:-8.34,lng:115.09,zoom:6,marinas:85,berths:6800},
-  {name:'Ireland',flag:'🇮🇪',code:'IE',region:'Northern Europe',lat:51.90,lng:-8.47,zoom:7,marinas:55,berths:5500},
-  {name:'Italy',flag:'🇮🇹',code:'IT',region:'Mediterranean',lat:41.50,lng:12.50,zoom:6,marinas:445,berths:55000},
-  {name:'Jamaica',flag:'🇯🇲',code:'JM',region:'Caribbean',lat:17.99,lng:-76.81,zoom:9,marinas:12,berths:900},
-  {name:'Japan',flag:'🇯🇵',code:'JP',region:'Asia Pacific',lat:35.10,lng:136.87,zoom:6,marinas:280,berths:22000},
-  {name:'Kenya',flag:'🇰🇪',code:'KE',region:'Africa',lat:-4.04,lng:39.67,zoom:9,marinas:14,berths:1200},
-  {name:'Latvia',flag:'🇱🇻',code:'LV',region:'Northern Europe',lat:57.05,lng:24.06,zoom:8,marinas:72,berths:5600},
-  {name:'Malaysia',flag:'🇲🇾',code:'MY',region:'Southeast Asia',lat:5.41,lng:100.33,zoom:7,marinas:85,berths:7500},
-  {name:'Maldives',flag:'🇲🇻',code:'MV',region:'Indian Ocean',lat:4.18,lng:73.51,zoom:8,marinas:28,berths:2200},
-  {name:'Malta',flag:'🇲🇹',code:'MT',region:'Mediterranean',lat:35.90,lng:14.51,zoom:11,marinas:14,berths:3800},
-  {name:'Martinique',flag:'🇲🇶',code:'MQ',region:'Caribbean',lat:14.61,lng:-61.07,zoom:10,marinas:16,berths:2200},
-  {name:'Mexico',flag:'🇲🇽',code:'MX',region:'North America',lat:23.23,lng:-106.41,zoom:6,marinas:145,berths:11500},
-  {name:'Monaco',flag:'🇲🇨',code:'MC',region:'Mediterranean',lat:43.73,lng:7.42,zoom:13,marinas:4,berths:1800},
-  {name:'Montenegro',flag:'🇲🇪',code:'ME',region:'Mediterranean',lat:42.43,lng:18.69,zoom:9,marinas:12,berths:3500},
-  {name:'Morocco',flag:'🇲🇦',code:'MA',region:'Mediterranean',lat:35.77,lng:-5.80,zoom:8,marinas:22,berths:3200},
-  {name:'Netherlands',flag:'🇳🇱',code:'NL',region:'Northern Europe',lat:52.39,lng:4.90,zoom:7,marinas:680,berths:55000},
-  {name:'New Zealand',flag:'🇳🇿',code:'NZ',region:'Pacific',lat:-36.85,lng:174.77,zoom:6,marinas:140,berths:11500},
-  {name:'Norway',flag:'🇳🇴',code:'NO',region:'Northern Europe',lat:59.91,lng:10.75,zoom:6,marinas:590,berths:47000},
-  {name:'Oman',flag:'🇴🇲',code:'OM',region:'Middle East',lat:23.60,lng:58.59,zoom:7,marinas:35,berths:4200},
-  {name:'Panama',flag:'🇵🇦',code:'PA',region:'Caribbean',lat:8.99,lng:-79.52,zoom:9,marinas:28,berths:2200},
-  {name:'Philippines',flag:'🇵🇭',code:'PH',region:'Southeast Asia',lat:14.55,lng:120.98,zoom:6,marinas:44,berths:3400},
-  {name:'Poland',flag:'🇵🇱',code:'PL',region:'Northern Europe',lat:54.35,lng:18.64,zoom:8,marinas:110,berths:8800},
-  {name:'Portugal',flag:'🇵🇹',code:'PT',region:'Mediterranean',lat:38.71,lng:-9.14,zoom:7,marinas:85,berths:12000},
-  {name:'Qatar',flag:'🇶🇦',code:'QA',region:'Middle East',lat:25.29,lng:51.53,zoom:10,marinas:18,berths:2400},
-  {name:'Seychelles',flag:'🇸🇨',code:'SC',region:'Indian Ocean',lat:-4.62,lng:55.45,zoom:10,marinas:22,berths:1800},
-  {name:'Singapore',flag:'🇸🇬',code:'SG',region:'Southeast Asia',lat:1.25,lng:103.82,zoom:11,marinas:18,berths:2800},
-  {name:'South Africa',flag:'🇿🇦',code:'ZA',region:'Africa',lat:-33.91,lng:18.42,zoom:7,marinas:55,berths:6800},
-  {name:'Spain',flag:'🇪🇸',code:'ES',region:'Mediterranean',lat:39.57,lng:2.65,zoom:7,marinas:285,berths:36000},
-  {name:'St Lucia',flag:'🇱🇨',code:'LC',region:'Caribbean',lat:13.82,lng:-60.97,zoom:10,marinas:18,berths:2200},
-  {name:'St Maarten',flag:'🇸🇽',code:'SX',region:'Caribbean',lat:18.02,lng:-63.05,zoom:11,marinas:14,berths:2400},
-  {name:'Sweden',flag:'🇸🇪',code:'SE',region:'Northern Europe',lat:57.71,lng:11.97,zoom:6,marinas:620,berths:50000},
-  {name:'Thailand',flag:'🇹🇭',code:'TH',region:'Southeast Asia',lat:7.88,lng:98.39,zoom:8,marinas:65,berths:6500},
-  {name:'Trinidad & Tobago',flag:'🇹🇹',code:'TT',region:'Caribbean',lat:10.65,lng:-61.52,zoom:10,marinas:14,berths:1800},
-  {name:'Tunisia',flag:'🇹🇳',code:'TN',region:'Mediterranean',lat:36.82,lng:10.18,zoom:8,marinas:18,berths:2800},
-  {name:'Turkey',flag:'🇹🇷',code:'TR',region:'Mediterranean',lat:36.85,lng:28.26,zoom:7,marinas:95,berths:22000},
-  {name:'UAE',flag:'🇦🇪',code:'AE',region:'Middle East',lat:25.20,lng:55.27,zoom:9,marinas:42,berths:8500},
-  {name:'UK',flag:'🇬🇧',code:'GB',region:'Northern Europe',lat:50.79,lng:-1.10,zoom:7,marinas:380,berths:42000},
-  {name:'USA',flag:'🇺🇸',code:'US',region:'North America',lat:25.78,lng:-80.19,zoom:5,marinas:1800,berths:160000},
-  {name:'USVI',flag:'🇻🇮',code:'VI',region:'Caribbean',lat:18.34,lng:-64.93,zoom:10,marinas:18,berths:2200},
-  {name:'Vietnam',flag:'🇻🇳',code:'VN',region:'Southeast Asia',lat:10.82,lng:106.63,zoom:7,marinas:28,berths:2200}
+{name:'Albania',flag:'🇦🇱',code:'AL',region:'Mediterranean',lat:41.33,lng:19.82,zoom:7,marinas:28,berths:2100},
+{name:'Antigua & Barbuda',flag:'🇦🇬',code:'AG',region:'Caribbean',lat:17.12,lng:-61.85,zoom:11,marinas:12,berths:2200},
+{name:'Argentina',flag:'🇦🇷',code:'AR',region:'South America',lat:-34.61,lng:-58.37,zoom:5,marinas:95,berths:7800},
+{name:'Australia',flag:'🇦🇺',code:'AU',region:'Pacific',lat:-33.87,lng:151.21,zoom:5,marinas:680,berths:56000},
+{name:'Bahamas',flag:'🇧🇸',code:'BS',region:'Caribbean',lat:25.08,lng:-77.35,zoom:7,marinas:85,berths:12000},
+{name:'Bahrain',flag:'🇧🇭',code:'BH',region:'Middle East',lat:26.22,lng:50.59,zoom:10,marinas:22,berths:1700},
+{name:'Barbados',flag:'🇧🇧',code:'BB',region:'Caribbean',lat:13.10,lng:-59.62,zoom:11,marinas:12,berths:1800},
+{name:'Belgium',flag:'🇧🇪',code:'BE',region:'Northern Europe',lat:51.26,lng:2.90,zoom:9,marinas:55,berths:5500},
+{name:'Brazil',flag:'🇧🇷',code:'BR',region:'South America',lat:-22.90,lng:-43.17,zoom:5,marinas:180,berths:15000},
+{name:'BVI',flag:'🇻🇬',code:'VG',region:'Caribbean',lat:18.42,lng:-64.62,zoom:10,marinas:28,berths:3200},
+{name:'Canada',flag:'🇨🇦',code:'CA',region:'North America',lat:43.64,lng:-79.38,zoom:4,marinas:310,berths:28000},
+{name:'Chile',flag:'🇨🇱',code:'CL',region:'South America',lat:-33.45,lng:-70.67,zoom:5,marinas:68,berths:5200},
+{name:'Croatia',flag:'🇭🇷',code:'HR',region:'Mediterranean',lat:43.52,lng:16.45,zoom:7,marinas:85,berths:18000},
+{name:'Cyprus',flag:'🇨🇾',code:'CY',region:'Mediterranean',lat:34.92,lng:33.63,zoom:9,marinas:18,berths:3200},
+{name:'Denmark',flag:'🇩🇰',code:'DK',region:'Northern Europe',lat:55.68,lng:12.57,zoom:6,marinas:540,berths:43000},
+{name:'Egypt',flag:'🇪🇬',code:'EG',region:'Africa',lat:31.20,lng:29.92,zoom:7,marinas:45,berths:3500},
+{name:'Estonia',flag:'🇪🇪',code:'EE',region:'Northern Europe',lat:59.44,lng:24.75,zoom:7,marinas:95,berths:7500},
+{name:'Fiji',flag:'🇫🇯',code:'FJ',region:'Pacific',lat:-17.73,lng:178.42,zoom:9,marinas:22,berths:1800},
+{name:'Finland',flag:'🇫🇮',code:'FI',region:'Northern Europe',lat:60.17,lng:24.94,zoom:6,marinas:420,berths:34000},
+{name:'France',flag:'🇫🇷',code:'FR',region:'Mediterranean',lat:43.55,lng:7.02,zoom:8,marinas:580,berths:48000},
+{name:'French Polynesia',flag:'🇵🇫',code:'PF',region:'Pacific',lat:-17.55,lng:-149.57,zoom:9,marinas:22,berths:1800},
+{name:'Germany',flag:'🇩🇪',code:'DE',region:'Northern Europe',lat:54.32,lng:10.13,zoom:6,marinas:480,berths:38000},
+{name:'Gibraltar',flag:'🇬🇮',code:'GI',region:'Mediterranean',lat:36.14,lng:-5.35,zoom:12,marinas:6,berths:900},
+{name:'Greece',flag:'🇬🇷',code:'GR',region:'Mediterranean',lat:37.94,lng:23.73,zoom:6,marinas:62,berths:14000},
+{name:'Grenada',flag:'🇬🇩',code:'GD',region:'Caribbean',lat:12.05,lng:-61.75,zoom:11,marinas:14,berths:1200},
+{name:'Iceland',flag:'🇮🇸',code:'IS',region:'Northern Europe',lat:64.15,lng:-21.94,zoom:6,marinas:45,berths:3500},
+{name:'Indonesia',flag:'🇮🇩',code:'ID',region:'Southeast Asia',lat:-8.34,lng:115.09,zoom:6,marinas:85,berths:6800},
+{name:'Ireland',flag:'🇮🇪',code:'IE',region:'Northern Europe',lat:51.90,lng:-8.47,zoom:7,marinas:55,berths:5500},
+{name:'Italy',flag:'🇮🇹',code:'IT',region:'Mediterranean',lat:41.50,lng:12.50,zoom:6,marinas:445,berths:55000},
+{name:'Jamaica',flag:'🇯🇲',code:'JM',region:'Caribbean',lat:17.99,lng:-76.81,zoom:9,marinas:12,berths:900},
+{name:'Japan',flag:'🇯🇵',code:'JP',region:'Asia Pacific',lat:35.10,lng:136.87,zoom:6,marinas:280,berths:22000},
+{name:'Kenya',flag:'🇰🇪',code:'KE',region:'Africa',lat:-4.04,lng:39.67,zoom:9,marinas:14,berths:1200},
+{name:'Latvia',flag:'🇱🇻',code:'LV',region:'Northern Europe',lat:57.05,lng:24.06,zoom:8,marinas:72,berths:5600},
+{name:'Malaysia',flag:'🇲🇾',code:'MY',region:'Southeast Asia',lat:5.41,lng:100.33,zoom:7,marinas:85,berths:7500},
+{name:'Maldives',flag:'🇲🇻',code:'MV',region:'Indian Ocean',lat:4.18,lng:73.51,zoom:8,marinas:28,berths:2200},
+{name:'Malta',flag:'🇲🇹',code:'MT',region:'Mediterranean',lat:35.90,lng:14.51,zoom:11,marinas:14,berths:3800},
+{name:'Martinique',flag:'🇲🇶',code:'MQ',region:'Caribbean',lat:14.61,lng:-61.07,zoom:10,marinas:16,berths:2200},
+{name:'Mexico',flag:'🇲🇽',code:'MX',region:'North America',lat:23.23,lng:-106.41,zoom:6,marinas:145,berths:11500},
+{name:'Monaco',flag:'🇲🇨',code:'MC',region:'Mediterranean',lat:43.73,lng:7.42,zoom:13,marinas:4,berths:1800},
+{name:'Montenegro',flag:'🇲🇪',code:'ME',region:'Mediterranean',lat:42.43,lng:18.69,zoom:9,marinas:12,berths:3500},
+{name:'Morocco',flag:'🇲🇦',code:'MA',region:'Mediterranean',lat:35.77,lng:-5.80,zoom:8,marinas:22,berths:3200},
+{name:'Netherlands',flag:'🇳🇱',code:'NL',region:'Northern Europe',lat:52.39,lng:4.90,zoom:7,marinas:680,berths:55000},
+{name:'New Zealand',flag:'🇳🇿',code:'NZ',region:'Pacific',lat:-36.85,lng:174.77,zoom:6,marinas:140,berths:11500},
+{name:'Norway',flag:'🇳🇴',code:'NO',region:'Northern Europe',lat:59.91,lng:10.75,zoom:6,marinas:590,berths:47000},
+{name:'Oman',flag:'🇴🇲',code:'OM',region:'Middle East',lat:23.60,lng:58.59,zoom:7,marinas:35,berths:4200},
+{name:'Panama',flag:'🇵🇦',code:'PA',region:'Caribbean',lat:8.99,lng:-79.52,zoom:9,marinas:28,berths:2200},
+{name:'Philippines',flag:'🇵🇭',code:'PH',region:'Southeast Asia',lat:14.55,lng:120.98,zoom:6,marinas:44,berths:3400},
+{name:'Poland',flag:'🇵🇱',code:'PL',region:'Northern Europe',lat:54.35,lng:18.64,zoom:8,marinas:110,berths:8800},
+{name:'Portugal',flag:'🇵🇹',code:'PT',region:'Mediterranean',lat:38.71,lng:-9.14,zoom:7,marinas:85,berths:12000},
+{name:'Qatar',flag:'🇶🇦',code:'QA',region:'Middle East',lat:25.29,lng:51.53,zoom:10,marinas:18,berths:2400},
+{name:'Seychelles',flag:'🇸🇨',code:'SC',region:'Indian Ocean',lat:-4.62,lng:55.45,zoom:10,marinas:22,berths:1800},
+{name:'Singapore',flag:'🇸🇬',code:'SG',region:'Southeast Asia',lat:1.25,lng:103.82,zoom:11,marinas:18,berths:2800},
+{name:'South Africa',flag:'🇿🇦',code:'ZA',region:'Africa',lat:-33.91,lng:18.42,zoom:7,marinas:55,berths:6800},
+{name:'Spain',flag:'🇪🇸',code:'ES',region:'Mediterranean',lat:39.57,lng:2.65,zoom:7,marinas:285,berths:36000},
+{name:'St Lucia',flag:'🇱🇨',code:'LC',region:'Caribbean',lat:13.82,lng:-60.97,zoom:10,marinas:18,berths:2200},
+{name:'St Maarten',flag:'🇸🇽',code:'SX',region:'Caribbean',lat:18.02,lng:-63.05,zoom:11,marinas:14,berths:2400},
+{name:'Sweden',flag:'🇸🇪',code:'SE',region:'Northern Europe',lat:57.71,lng:11.97,zoom:6,marinas:620,berths:50000},
+{name:'Thailand',flag:'🇹🇭',code:'TH',region:'Southeast Asia',lat:7.88,lng:98.39,zoom:8,marinas:65,berths:6500},
+{name:'Trinidad & Tobago',flag:'🇹🇹',code:'TT',region:'Caribbean',lat:10.65,lng:-61.52,zoom:10,marinas:14,berths:1800},
+{name:'Tunisia',flag:'🇹🇳',code:'TN',region:'Mediterranean',lat:36.82,lng:10.18,zoom:8,marinas:18,berths:2800},
+{name:'Turkey',flag:'🇹🇷',code:'TR',region:'Mediterranean',lat:36.85,lng:28.26,zoom:7,marinas:95,berths:22000},
+{name:'UAE',flag:'🇦🇪',code:'AE',region:'Middle East',lat:25.20,lng:55.27,zoom:9,marinas:42,berths:8500},
+{name:'UK',flag:'🇬🇧',code:'GB',region:'Northern Europe',lat:50.79,lng:-1.10,zoom:7,marinas:380,berths:42000},
+{name:'USA',flag:'🇺🇸',code:'US',region:'North America',lat:25.78,lng:-80.19,zoom:5,marinas:1800,berths:160000},
+{name:'USVI',flag:'🇻🇮',code:'VI',region:'Caribbean',lat:18.34,lng:-64.93,zoom:10,marinas:18,berths:2200},
+{name:'Vietnam',flag:'🇻🇳',code:'VN',region:'Southeast Asia',lat:10.82,lng:106.63,zoom:7,marinas:28,berths:2200}
 ];
-
 var MARINAS=[
-  {n:"Port Vauban",city:"Antibes",country:"France",region:"Cote d'Azur",lat:43.579,lng:7.124,b:1642,loa:170,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Vieux Port de Cannes",city:"Cannes",country:"France",region:"Cote d'Azur",lat:43.55,lng:7.017,b:600,loa:80,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Port Pierre Canto",city:"Cannes",country:"France",region:"Cote d'Azur",lat:43.542,lng:7.024,b:360,loa:60,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Port Gallice",city:"Juan-les-Pins",country:"France",region:"Cote d'Azur",lat:43.566,lng:7.106,b:320,loa:40,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Port de Nice",city:"Nice",country:"France",region:"Cote d'Azur",lat:43.695,lng:7.276,b:800,loa:60,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Port de Golfe-Juan",city:"Golfe-Juan",country:"France",region:"Cote d'Azur",lat:43.561,lng:7.079,b:850,loa:50,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Cala del Forte",city:"Ventimiglia",country:"France",region:"Cote d'Azur",lat:43.795,lng:7.596,b:178,loa:70,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Port Hercules",city:"Monte-Carlo",country:"Monaco",region:"Monaco",lat:43.733,lng:7.426,b:760,loa:200,fuel:"Yes",wifi:"Yes",lift:"No"},
-  {n:"Port de Fontvieille",city:"Fontvieille",country:"Monaco",region:"Monaco",lat:43.728,lng:7.414,b:350,loa:60,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Marina di Portofino",city:"Portofino",country:"Italy",region:"Italian Riviera",lat:44.304,lng:9.208,b:14,loa:40,fuel:"No",wifi:"Yes",lift:"No"},
-  {n:"Porto Carlo Riva",city:"Imperia",country:"Italy",region:"Italian Riviera",lat:43.886,lng:8.018,b:250,loa:60,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Marina di San Lorenzo",city:"San Lorenzo al Mare",country:"Italy",region:"Italian Riviera",lat:43.856,lng:7.967,b:700,loa:50,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Porto Maurizio",city:"Imperia",country:"Italy",region:"Italian Riviera",lat:43.882,lng:8.017,b:600,loa:40,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Marina di Punta Ala",city:"Punta Ala",country:"Italy",region:"Tuscany",lat:42.804,lng:10.737,b:720,loa:80,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Porto Ercole",city:"Monte Argentario",country:"Italy",region:"Tuscany",lat:42.393,lng:11.213,b:450,loa:40,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Marina di Porto Cervo",city:"Costa Smeralda",country:"Italy",region:"Sardinia",lat:41.133,lng:9.524,b:700,loa:135,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Porto Rotondo",city:"Gallura",country:"Italy",region:"Sardinia",lat:40.975,lng:9.536,b:700,loa:70,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Marina del Sole Olbia",city:"Olbia",country:"Italy",region:"Sardinia",lat:40.926,lng:9.493,b:400,loa:50,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Marina di Stabia",city:"Castellammare di Stabia",country:"Italy",region:"Campania",lat:40.701,lng:14.479,b:1000,loa:100,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Mergellina Marina",city:"Naples",country:"Italy",region:"Campania",lat:40.826,lng:14.209,b:500,loa:40,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Marina di Ragusa",city:"Ragusa",country:"Italy",region:"Sicily",lat:36.779,lng:14.556,b:720,loa:40,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Porto di Palermo",city:"Palermo",country:"Italy",region:"Sicily",lat:38.117,lng:13.361,b:400,loa:200,fuel:"Yes",wifi:"Yes",lift:"No"},
-  {n:"Grand Harbour Marina",city:"Valletta",country:"Malta",region:"Malta",lat:35.898,lng:14.511,b:260,loa:80,fuel:"Yes",wifi:"Yes",lift:"No"},
-  {n:"Msida Marina",city:"Msida",country:"Malta",region:"Malta",lat:35.899,lng:14.49,b:650,loa:25,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Marina di ta'Xbiex",city:"Ta'Xbiex",country:"Malta",region:"Malta",lat:35.9,lng:14.497,b:400,loa:40,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Ocean Village Marina",city:"Gibraltar",country:"Gibraltar",region:"Gibraltar",lat:36.139,lng:-5.352,b:200,loa:80,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Marina Bay",city:"Gibraltar",country:"Gibraltar",region:"Gibraltar",lat:36.143,lng:-5.352,b:170,loa:50,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Port de la Selva",city:"La Selva",country:"Spain",region:"Costa Brava",lat:42.336,lng:3.098,b:150,loa:20,fuel:"Yes",wifi:"Yes",lift:"No"},
-  {n:"Port de Llanca",city:"Llanca",country:"Spain",region:"Costa Brava",lat:42.368,lng:3.108,b:300,loa:20,fuel:"Yes",wifi:"Yes",lift:"No"},
-  {n:"Port de l'Estartit",city:"L'Estartit",country:"Spain",region:"Costa Brava",lat:42.053,lng:3.198,b:643,loa:25,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Marina de Sant Feliu",city:"Sant Feliu de Guixols",country:"Spain",region:"Costa Brava",lat:41.779,lng:2.968,b:439,loa:80,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Club Nautic Roses",city:"Roses",country:"Spain",region:"Costa Brava",lat:42.265,lng:3.178,b:374,loa:45,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Port de Palamos",city:"Palamos",country:"Spain",region:"Costa Brava",lat:41.847,lng:3.133,b:700,loa:50,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Club Nautic de Salou",city:"Salou",country:"Spain",region:"Costa Daurada",lat:41.073,lng:1.144,b:215,loa:24,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Club Nautic Cambrils",city:"Cambrils",country:"Spain",region:"Costa Daurada",lat:41.07,lng:1.062,b:447,loa:23,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Marina Port Tarraco",city:"Tarragona",country:"Spain",region:"Costa Daurada",lat:41.11,lng:1.249,b:32,loa:160,fuel:"Yes",wifi:"Yes",lift:"No"},
-  {n:"Club Nautic l'Ametlla",city:"L'Ametlla de Mar",country:"Spain",region:"Costa Daurada",lat:40.871,lng:0.792,b:255,loa:20,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Marina Sant Carles",city:"Sant Carles de la Rapita",country:"Spain",region:"Costa Daurada",lat:40.617,lng:0.596,b:500,loa:25,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Port Adriano",city:"Calvia",country:"Spain",region:"Balearics - Mallorca",lat:39.506,lng:2.474,b:488,loa:100,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Puerto Portals",city:"Portals Nous",country:"Spain",region:"Balearics - Mallorca",lat:39.525,lng:2.548,b:650,loa:60,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Marina Port de Mallorca",city:"Palma",country:"Spain",region:"Balearics - Mallorca",lat:39.568,lng:2.636,b:200,loa:50,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Port de Pollenca",city:"Pollenca",country:"Spain",region:"Balearics - Mallorca",lat:39.905,lng:3.094,b:611,loa:40,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Port d'Andratx",city:"Andratx",country:"Spain",region:"Balearics - Mallorca",lat:39.543,lng:2.383,b:350,loa:30,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"D-Marin Palma Cuarentena",city:"Palma",country:"Spain",region:"Balearics - Mallorca",lat:39.562,lng:2.625,b:400,loa:70,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Puerto Cala'n Bosch",city:"Ciutadella",country:"Spain",region:"Balearics - Menorca",lat:39.935,lng:3.823,b:276,loa:15,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Puerto Addaya",city:"Menorca",country:"Spain",region:"Balearics - Menorca",lat:40.008,lng:4.199,b:168,loa:15,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Marina Ibiza",city:"Ibiza Town",country:"Spain",region:"Balearics - Ibiza",lat:38.909,lng:1.435,b:425,loa:110,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Marina Port Ibiza",city:"Ibiza Town",country:"Spain",region:"Balearics - Ibiza",lat:38.907,lng:1.434,b:300,loa:60,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"OneOcean Port Vell",city:"Barcelona",country:"Spain",region:"Barcelona",lat:41.375,lng:2.181,b:70,loa:190,fuel:"Yes",wifi:"Yes",lift:"No"},
-  {n:"Marina Port Vell",city:"Barcelona",country:"Spain",region:"Barcelona",lat:41.374,lng:2.182,b:380,loa:50,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"Marina de Denia",city:"Denia",country:"Spain",region:"Costa Blanca",lat:38.843,lng:0.118,b:700,loa:40,fuel:"Yes",wifi:"Yes",lift:"Yes"},
-  {n:"IGY Malaga Marina",city:"Malaga",country:"Spain",region:"Costa del Sol",lat:36.716,lng:-4.418,b:33,loa:180,fuel:"Yes",wifi:"Yes",lift:"No"},
-  {n:"Port de Palafurgell",city:"Llafranc",country:"Spain",region:"Costa Brava",lat:41.89,lng:3.195,b:140,loa:14,fuel:"Yes",wifi:"Yes",lift:"No"}
+{n:"Port Vauban",city:"Antibes",country:"France",lat:43.579,lng:7.124,b:1642,loa:170,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Vieux Port de Cannes",city:"Cannes",country:"France",lat:43.55,lng:7.017,b:600,loa:80,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Port Pierre Canto",city:"Cannes",country:"France",lat:43.542,lng:7.024,b:360,loa:60,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Port Gallice",city:"Juan-les-Pins",country:"France",lat:43.566,lng:7.106,b:320,loa:40,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Port de Nice",city:"Nice",country:"France",lat:43.695,lng:7.276,b:800,loa:60,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Port de Golfe-Juan",city:"Golfe-Juan",country:"France",lat:43.561,lng:7.079,b:850,loa:50,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Cala del Forte",city:"Ventimiglia",country:"France",lat:43.795,lng:7.596,b:178,loa:70,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Port Hercules",city:"Monte-Carlo",country:"Monaco",lat:43.733,lng:7.426,b:760,loa:200,fuel:"Yes",wifi:"Yes",lift:"No"},
+{n:"Port de Fontvieille",city:"Fontvieille",country:"Monaco",lat:43.728,lng:7.414,b:350,loa:60,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Marina di Portofino",city:"Portofino",country:"Italy",lat:44.304,lng:9.208,b:14,loa:40,fuel:"No",wifi:"Yes",lift:"No"},
+{n:"Porto Carlo Riva",city:"Imperia",country:"Italy",lat:43.886,lng:8.018,b:250,loa:60,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Marina di San Lorenzo",city:"San Lorenzo al Mare",country:"Italy",lat:43.856,lng:7.967,b:700,loa:50,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Porto Maurizio",city:"Imperia",country:"Italy",lat:43.882,lng:8.017,b:600,loa:40,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Marina di Punta Ala",city:"Punta Ala",country:"Italy",lat:42.804,lng:10.737,b:720,loa:80,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Porto Ercole",city:"Monte Argentario",country:"Italy",lat:42.393,lng:11.213,b:450,loa:40,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Marina di Porto Cervo",city:"Costa Smeralda",country:"Italy",lat:41.133,lng:9.524,b:700,loa:135,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Porto Rotondo",city:"Gallura",country:"Italy",lat:40.975,lng:9.536,b:700,loa:70,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Marina del Sole Olbia",city:"Olbia",country:"Italy",lat:40.926,lng:9.493,b:400,loa:50,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Marina di Stabia",city:"Castellammare di Stabia",country:"Italy",lat:40.701,lng:14.479,b:1000,loa:100,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Mergellina Marina",city:"Naples",country:"Italy",lat:40.826,lng:14.209,b:500,loa:40,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Marina di Ragusa",city:"Ragusa",country:"Italy",lat:36.779,lng:14.556,b:720,loa:40,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Porto di Palermo",city:"Palermo",country:"Italy",lat:38.117,lng:13.361,b:400,loa:200,fuel:"Yes",wifi:"Yes",lift:"No"},
+{n:"Grand Harbour Marina",city:"Valletta",country:"Malta",lat:35.898,lng:14.511,b:260,loa:80,fuel:"Yes",wifi:"Yes",lift:"No"},
+{n:"Msida Marina",city:"Msida",country:"Malta",lat:35.899,lng:14.49,b:650,loa:25,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Marina di ta'Xbiex",city:"Ta'Xbiex",country:"Malta",lat:35.9,lng:14.497,b:400,loa:40,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Ocean Village Marina",city:"Gibraltar",country:"Gibraltar",lat:36.139,lng:-5.352,b:200,loa:80,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Marina Bay",city:"Gibraltar",country:"Gibraltar",lat:36.143,lng:-5.352,b:170,loa:50,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Port de la Selva",city:"La Selva",country:"Spain",lat:42.336,lng:3.098,b:150,loa:20,fuel:"Yes",wifi:"Yes",lift:"No"},
+{n:"Port de Llanca",city:"Llanca",country:"Spain",lat:42.368,lng:3.108,b:300,loa:20,fuel:"Yes",wifi:"Yes",lift:"No"},
+{n:"Port de l'Estartit",city:"L'Estartit",country:"Spain",lat:42.053,lng:3.198,b:643,loa:25,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Marina de Sant Feliu",city:"Sant Feliu",country:"Spain",lat:41.779,lng:2.968,b:439,loa:80,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Club Nautic Roses",city:"Roses",country:"Spain",lat:42.265,lng:3.178,b:374,loa:45,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Port de Palamos",city:"Palamos",country:"Spain",lat:41.847,lng:3.133,b:700,loa:50,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Club Nautic Cambrils",city:"Cambrils",country:"Spain",lat:41.07,lng:1.062,b:447,loa:23,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Marina Port Tarraco",city:"Tarragona",country:"Spain",lat:41.11,lng:1.249,b:32,loa:160,fuel:"Yes",wifi:"Yes",lift:"No"},
+{n:"Port Adriano",city:"Calvia",country:"Spain",lat:39.506,lng:2.474,b:488,loa:100,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Puerto Portals",city:"Portals Nous",country:"Spain",lat:39.525,lng:2.548,b:650,loa:60,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Marina Port de Mallorca",city:"Palma",country:"Spain",lat:39.568,lng:2.636,b:200,loa:50,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Port de Pollenca",city:"Pollenca",country:"Spain",lat:39.905,lng:3.094,b:611,loa:40,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"D-Marin Palma Cuarentena",city:"Palma",country:"Spain",lat:39.562,lng:2.625,b:400,loa:70,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Marina Ibiza",city:"Ibiza Town",country:"Spain",lat:38.909,lng:1.435,b:425,loa:110,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Marina Port Ibiza",city:"Ibiza Town",country:"Spain",lat:38.907,lng:1.434,b:300,loa:60,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"OneOcean Port Vell",city:"Barcelona",country:"Spain",lat:41.375,lng:2.181,b:70,loa:190,fuel:"Yes",wifi:"Yes",lift:"No"},
+{n:"Marina Port Vell",city:"Barcelona",country:"Spain",lat:41.374,lng:2.182,b:380,loa:50,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"Marina de Denia",city:"Denia",country:"Spain",lat:38.843,lng:0.118,b:700,loa:40,fuel:"Yes",wifi:"Yes",lift:"Yes"},
+{n:"IGY Malaga Marina",city:"Malaga",country:"Spain",lat:36.716,lng:-4.418,b:33,loa:180,fuel:"Yes",wifi:"Yes",lift:"No"}
 ];
-
 var MARINA_MAP={};
 MARINAS.forEach(function(m){if(!MARINA_MAP[m.country])MARINA_MAP[m.country]=[];MARINA_MAP[m.country].push(m);});
-
 var PAGES={
-  about:'<div><div class="pg-h1">About Us</div><div class="pg-sub">The World\'s Marina Marketplace</div><p class="pg-p">Yacht Harbours is the world\'s most comprehensive digital marketplace for marinas, yacht clubs and anchorages. We connect captains, crew and yacht owners with over 12,000 berthing destinations across every ocean and coastline.</p><p class="pg-p">Built by sailors for sailors — combining real-time availability, verified marina data, nautical charts and community reviews into one seamless experience.</p><p class="pg-p">From the fjords of Norway to the lagoons of French Polynesia, every harbour in the world deserves to be found.</p></div>',
-  security:'<div><div class="pg-h1">Security &amp; Privacy</div><div class="pg-sub">Your data, your vessel, your terms</div><div class="pg-card"><div class="pg-card-t">🔒 Data Security</div><div class="pg-card-d">Your personal information is encrypted in transit and at rest. We never sell your data to third parties.</div></div><div class="pg-card"><div class="pg-card-t">📍 Location Privacy</div><div class="pg-card-d">GPS usage is entirely optional. Location data is never stored beyond your session.</div></div><div class="pg-card"><div class="pg-card-t">🍪 Cookies</div><div class="pg-card-d">Minimal functional cookies only. No advertising trackers or third-party profiling.</div></div><div class="pg-card"><div class="pg-card-t">⚖️ GDPR &amp; Privacy</div><div class="pg-card-d">Yacht Harbours complies with GDPR, CCPA and applicable international data protection law.</div></div></div>',
-  contact:'<div><div class="pg-h1">Contact Us</div><div class="pg-sub">We\'re always on watch</div><div class="pg-card" style="display:flex;align-items:center;gap:12px"><span style="font-size:1.2rem">✉️</span><div><div class="pg-card-t">General Enquiries</div><div class="pg-card-d">hello@yachtharbours.com</div></div></div><div class="pg-card" style="display:flex;align-items:center;gap:12px"><span style="font-size:1.2rem">⚓</span><div><div class="pg-card-t">Marina Listings</div><div class="pg-card-d">marinas@yachtharbours.com</div></div></div><div class="pg-card" style="display:flex;align-items:center;gap:12px"><span style="font-size:1.2rem">🛟</span><div><div class="pg-card-t">Support</div><div class="pg-card-d">support@yachtharbours.com</div></div></div><div class="pg-card" style="display:flex;align-items:center;gap:12px"><span style="font-size:1.2rem">📰</span><div><div class="pg-card-t">Press &amp; Media</div><div class="pg-card-d">press@yachtharbours.com</div></div></div></div>'
-};var sel=null,uLat=null,uLng=null;
+about:'<div><div class="pg-h1">About Us</div><div class="pg-sub">The World\'s Marina Marketplace</div><p class="pg-p">Yacht Harbours is the world\'s most comprehensive digital marketplace for marinas, yacht clubs and anchorages. We connect captains, crew and yacht owners with over 12,000 berthing destinations across every ocean and coastline.</p><p class="pg-p">Built by sailors for sailors — combining real-time availability, verified marina data, nautical charts and community reviews into one seamless experience.</p><p class="pg-p">From the fjords of Norway to the lagoons of French Polynesia, every harbour in the world deserves to be found.</p></div>',
+security:'<div><div class="pg-h1">Security &amp; Privacy</div><div class="pg-sub">Your data, your vessel, your terms</div><div class="pg-card"><div class="pg-card-t">🔒 Data Security</div><div class="pg-card-d">Your personal information is encrypted in transit and at rest. We never sell your data to third parties.</div></div><div class="pg-card"><div class="pg-card-t">📍 Location Privacy</div><div class="pg-card-d">GPS usage is entirely optional. Location data is never stored beyond your session.</div></div><div class="pg-card"><div class="pg-card-t">🍪 Cookies</div><div class="pg-card-d">Minimal functional cookies only. No advertising trackers or profiling.</div></div><div class="pg-card"><div class="pg-card-t">⚖️ GDPR &amp; Privacy</div><div class="pg-card-d">Yacht Harbours complies with GDPR, CCPA and applicable international data protection law.</div></div></div>',
+contact:'<div><div class="pg-h1">Contact Us</div><div class="pg-sub">We\'re always on watch</div><div class="pg-card" style="display:flex;align-items:center;gap:12px"><span>✉️</span><div><div class="pg-card-t">General Enquiries</div><div class="pg-card-d">hello@yachtharbours.com</div></div></div><div class="pg-card" style="display:flex;align-items:center;gap:12px"><span>⚓</span><div><div class="pg-card-t">Marina Listings</div><div class="pg-card-d">marinas@yachtharbours.com</div></div></div><div class="pg-card" style="display:flex;align-items:center;gap:12px"><span>🛟</span><div><div class="pg-card-t">Support</div><div class="pg-card-d">support@yachtharbours.com</div></div></div></div>'
+};
+var sel=null,uLat=null,uLng=null;
 var sorted=COUNTRIES.slice().sort(function(a,b){return a.name.localeCompare(b.name);});
-
 var canvas=document.getElementById('wmap');
 var ctx=canvas.getContext('2d');
 var W=0,H=0,panX=0,panY=0,scale=1,baseScale=1;
-var dragging=false,lastX=0,lastY=0,hovMarina=-1,lastTouchDist=0;
-
-function resize(){
-  var wrap=document.getElementById('mapWrap');
-  W=wrap.offsetWidth;H=wrap.offsetHeight;
-  var dpr=window.devicePixelRatio||1;
-  canvas.width=W*dpr;canvas.height=H*dpr;
-  canvas.style.width=W+'px';canvas.style.height=H+'px';
-  ctx.resetTransform();ctx.scale(dpr,dpr);
-  baseScale=Math.min(W/360,H/185)*1.05;
-  if(scale===1){scale=baseScale;panX=W/2;panY=H/2;}
-  drawMap();
-}
-
-function ll2xy(lat,lng){return[panX+lng*scale,panY-lat*scale];}
-
-var LAND=[
-  [[35,-9],[38,-8],[40,-7],[42,-9],[43,-8],[44,-6],[43,-2],[43,3],[45,5],[47,8],[49,9],[51,9],[53,8],[55,9],[57,8],[59,9],[60,5],[62,5],[63,8],[65,5],[67,8],[69,10],[70,9],[68,8],[66,7],[64,6],[62,7],[60,7],[58,6],[56,8],[54,7],[52,6],[50,7],[48,7],[46,5],[44,2],[42,0],[40,3],[38,2],[36,3],[35,1],[36,-1],[37,-2],[36,-3],[37,-4],[36,-5],[37,-6],[35,-7],[35,-9]],
-  [[44,8],[43,8],[41,6],[39,8],[37,12],[37,15],[38,16],[40,18],[41,16],[42,14],[43,12],[44,11],[45,11],[44,8]],
-  [[42,20],[41,20],[39,21],[37,22],[37,24],[39,23],[41,22],[42,22],[42,20]],
-  [[55,8],[57,11],[59,12],[61,10],[63,8],[65,6],[67,7],[69,8],[71,7],[69,4],[67,5],[65,7],[63,9],[61,8],[59,10],[57,10],[55,8]],
-  [[50,-5],[51,-4],[53,-4],[54,-3],[55,-2],[57,-3],[58,-4],[57,-5],[55,-6],[54,-5],[52,-3],[50,-5]],
-  [[30,-5],[33,-2],[35,3],[37,8],[36,12],[35,13],[32,13],[30,10],[30,-5]],
-  [[36,26],[37,29],[38,32],[40,33],[41,36],[42,33],[41,31],[40,28],[38,27],[36,26]],
-  [[25,-80],[30,-82],[35,-76],[40,-74],[43,-70],[47,-65],[49,-64],[51,-68],[53,-68],[55,-65],[57,-63],[60,-60],[60,-65],[64,-64],[67,-64],[70,-60],[70,-55],[67,-53],[63,-56],[60,-58],[56,-60],[53,-63],[50,-66],[46,-65],[43,-67],[40,-70],[37,-73],[34,-76],[30,-80],[25,-80]],
-  [[25,-80],[26,-82],[28,-82],[30,-80],[33,-79],[36,-76],[38,-75],[41,-72],[44,-68],[47,-65],[49,-64],[50,-124],[48,-124],[46,-124],[44,-124],[42,-124],[38,-122],[35,-120],[32,-117],[28,-114],[25,-110],[25,-80]],
-  [[-34,-58],[-22,-43],[-12,-37],[-3,-38],[-1,-40],[0,-40],[8,-40],[10,-75],[7,-77],[3,-76],[0,-78],[-4,-80],[-8,-75],[-12,-67],[-18,-72],[-22,-68],[-28,-67],[-33,-61],[-34,-58]],
-  [[-12,136],[-16,136],[-20,138],[-24,144],[-28,150],[-32,152],[-34,151],[-38,147],[-40,147],[-43,147],[-43,146],[-40,143],[-36,139],[-32,135],[-28,131],[-24,127],[-20,123],[-16,124],[-13,131],[-12,136]],
-  [[-14,126],[-20,116],[-26,114],[-32,121],[-34,119],[-38,114],[-32,115],[-28,115],[-24,113],[-20,116],[-16,122],[-14,126]],
-  [[34,131],[36,133],[37,136],[39,140],[41,141],[41,140],[39,137],[37,133],[34,131]]
-];
-
-function drawMap(){
-  ctx.clearRect(0,0,W,H);
-  var g=ctx.createLinearGradient(0,0,0,H);
-  g.addColorStop(0,'#04111f');g.addColorStop(1,'#071828');
-  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-  ctx.strokeStyle='rgba(201,153,60,0.055)';ctx.lineWidth=0.5;
-  for(var lat=-80;lat<=80;lat+=20){var p1=ll2xy(lat,-180),p2=ll2xy(lat,180);ctx.beginPath();ctx.moveTo(p1[0],p1[1]);ctx.lineTo(p2[0],p2[1]);ctx.stroke();}
-  for(var lng=-180;lng<=180;lng+=30){var p1=ll2xy(90,lng),p2=ll2xy(-90,lng);ctx.beginPath();ctx.moveTo(p1[0],p1[1]);ctx.lineTo(p2[0],p2[1]);ctx.stroke();}
-  LAND.forEach(function(poly){
-    ctx.beginPath();
-    poly.forEach(function(pt,i){var xy=ll2xy(pt[0],pt[1]);i===0?ctx.moveTo(xy[0],xy[1]):ctx.lineTo(xy[0],xy[1]);});
-    ctx.closePath();ctx.fillStyle='#0f2d42';ctx.fill();
-    ctx.strokeStyle='rgba(201,153,60,0.2)';ctx.lineWidth=0.7;ctx.stroke();
-  });
-  MARINAS.forEach(function(m,idx){
-    var xy=ll2xy(m.lat,m.lng),x=xy[0],y=xy[1];
-    if(x<-12||x>W+12||y<-12||y>H+12)return;
-    var r=hovMarina===idx?8:6;
-    if(hovMarina===idx){ctx.beginPath();ctx.arc(x,y,r+5,0,Math.PI*2);ctx.strokeStyle='rgba(201,153,60,0.35)';ctx.lineWidth=1;ctx.stroke();}
-    ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);
-    ctx.fillStyle=hovMarina===idx?'#e8c26a':'#c9993c';ctx.fill();
-    ctx.strokeStyle='rgba(255,255,255,0.9)';ctx.lineWidth=hovMarina===idx?2:1.5;ctx.stroke();
-  });
-  if(uLat!==null){
-    var uxy=ll2xy(uLat,uLng);
-    ctx.beginPath();ctx.arc(uxy[0],uxy[1],7,0,Math.PI*2);ctx.fillStyle='#5dd6e4';ctx.fill();
-    ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
-    ctx.beginPath();ctx.arc(uxy[0],uxy[1],12,0,Math.PI*2);ctx.strokeStyle='rgba(93,214,228,0.3)';ctx.lineWidth=1;ctx.stroke();
-  }
-}
-
+var dragging=false,lastX=0,lastY=0,hovM=-1,lastTD=0;
+function resize(){var wrap=document.getElementById('mapWrap');W=wrap.offsetWidth;H=wrap.offsetHeight;var dpr=window.devicePixelRatio||1;canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.resetTransform();ctx.scale(dpr,dpr);baseScale=Math.min(W/360,H/185)*1.05;if(scale===1){scale=baseScale;panX=W/2;panY=H/2;}drawMap();}
+function ll(lat,lng){return[panX+lng*scale,panY-lat*scale];}
+var LAND=[[[35,-9],[38,-8],[40,-7],[42,-9],[43,-8],[44,-6],[43,-2],[43,3],[45,5],[47,8],[49,9],[51,9],[53,8],[55,9],[57,8],[59,9],[60,5],[62,5],[63,8],[65,5],[67,8],[69,10],[70,9],[68,8],[66,7],[64,6],[62,7],[60,7],[58,6],[56,8],[54,7],[52,6],[50,7],[48,7],[46,5],[44,2],[42,0],[40,3],[38,2],[36,3],[35,1],[36,-1],[37,-2],[36,-3],[37,-4],[36,-5],[37,-6],[35,-7],[35,-9]],[[44,8],[43,8],[41,6],[39,8],[37,12],[37,15],[38,16],[40,18],[41,16],[42,14],[43,12],[44,11],[45,11],[44,8]],[[42,20],[41,20],[39,21],[37,22],[37,24],[39,23],[41,22],[42,22],[42,20]],[[55,8],[57,11],[59,12],[61,10],[63,8],[65,6],[67,7],[69,8],[71,7],[69,4],[67,5],[65,7],[63,9],[61,8],[59,10],[57,10],[55,8]],[[50,-5],[51,-4],[53,-4],[54,-3],[55,-2],[57,-3],[58,-4],[57,-5],[55,-6],[54,-5],[52,-3],[50,-5]],[[30,-5],[33,-2],[35,3],[37,8],[36,12],[35,13],[32,13],[30,10],[30,-5]],[[36,26],[37,29],[38,32],[40,33],[41,36],[42,33],[41,31],[40,28],[38,27],[36,26]],[[25,-80],[30,-82],[35,-76],[40,-74],[43,-70],[47,-65],[49,-64],[51,-68],[55,-65],[57,-63],[60,-60],[60,-65],[64,-64],[67,-64],[70,-60],[70,-55],[67,-53],[63,-56],[60,-58],[56,-60],[53,-63],[50,-66],[46,-65],[43,-67],[40,-70],[37,-73],[34,-76],[30,-80],[25,-80]],[[25,-80],[28,-82],[30,-80],[33,-79],[36,-76],[38,-75],[41,-72],[44,-68],[47,-65],[49,-64],[50,-124],[46,-124],[42,-124],[38,-122],[35,-120],[32,-117],[28,-114],[25,-110],[25,-80]],[[-34,-58],[-22,-43],[-12,-37],[-3,-38],[0,-40],[8,-40],[10,-75],[7,-77],[3,-76],[0,-78],[-4,-80],[-8,-75],[-12,-67],[-18,-72],[-22,-68],[-28,-67],[-33,-61],[-34,-58]],[[-12,136],[-16,136],[-20,138],[-24,144],[-28,150],[-32,152],[-34,151],[-38,147],[-40,147],[-43,147],[-43,146],[-40,143],[-36,139],[-32,135],[-28,131],[-24,127],[-20,123],[-16,124],[-13,131],[-12,136]],[[-14,126],[-20,116],[-26,114],[-32,121],[-34,119],[-38,114],[-32,115],[-28,115],[-24,113],[-20,116],[-16,122],[-14,126]],[[34,131],[36,133],[37,136],[39,140],[41,141],[41,140],[39,137],[37,133],[34,131]]];
+function drawMap(){ctx.clearRect(0,0,W,H);var g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#04111f');g.addColorStop(1,'#071828');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.strokeStyle='rgba(201,153,60,0.055)';ctx.lineWidth=0.5;for(var lat=-80;lat<=80;lat+=20){var p1=ll(lat,-180),p2=ll(lat,180);ctx.beginPath();ctx.moveTo(p1[0],p1[1]);ctx.lineTo(p2[0],p2[1]);ctx.stroke();}for(var lng=-180;lng<=180;lng+=30){var p1=ll(90,lng),p2=ll(-90,lng);ctx.beginPath();ctx.moveTo(p1[0],p1[1]);ctx.lineTo(p2[0],p2[1]);ctx.stroke();}LAND.forEach(function(poly){ctx.beginPath();poly.forEach(function(pt,i){var xy=ll(pt[0],pt[1]);i===0?ctx.moveTo(xy[0],xy[1]):ctx.lineTo(xy[0],xy[1]);});ctx.closePath();ctx.fillStyle='#0f2d42';ctx.fill();ctx.strokeStyle='rgba(201,153,60,0.2)';ctx.lineWidth=0.7;ctx.stroke();});MARINAS.forEach(function(m,idx){var xy=ll(m.lat,m.lng),x=xy[0],y=xy[1];if(x<-12||x>W+12||y<-12||y>H+12)return;var r=hovM===idx?8:6;if(hovM===idx){ctx.beginPath();ctx.arc(x,y,r+5,0,Math.PI*2);ctx.strokeStyle='rgba(201,153,60,0.35)';ctx.lineWidth=1;ctx.stroke();}ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=hovM===idx?'#e8c26a':'#c9993c';ctx.fill();ctx.strokeStyle='rgba(255,255,255,0.9)';ctx.lineWidth=hovM===idx?2:1.5;ctx.stroke();});if(uLat!==null){var uxy=ll(uLat,uLng);ctx.beginPath();ctx.arc(uxy[0],uxy[1],7,0,Math.PI*2);ctx.fillStyle='#5dd6e4';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();}}
 function zoom(f){panX=W/2-(W/2-panX)*f;panY=H/2-(H/2-panY)*f;scale*=f;drawMap();}
 function resetView(){scale=baseScale;panX=W/2;panY=H/2;document.getElementById('hero').classList.remove('gone');closePanel();drawMap();}
-function flyTo(lat,lng,z){
-  var tx=W/2-lng*z,ty=H/2+lat*z,steps=22,step=0,sx=panX,sy=panY,ss=scale;
-  var id=setInterval(function(){
-    step++;var t=step/steps,ease=t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
-    panX=sx+(tx-sx)*ease;panY=sy+(ty-sy)*ease;scale=ss+(z-ss)*ease;drawMap();
-    if(step>=steps)clearInterval(id);
-  },14);
-}
-
+function flyTo(lat,lng,z){var tx=W/2-lng*z,ty=H/2+lat*z,steps=22,step=0,sx=panX,sy=panY,ss=scale;var id=setInterval(function(){step++;var t=step/steps,e=t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;panX=sx+(tx-sx)*e;panY=sy+(ty-sy)*e;scale=ss+(z-ss)*e;drawMap();if(step>=steps)clearInterval(id);},14);}
 canvas.addEventListener('mousedown',function(e){dragging=true;lastX=e.offsetX;lastY=e.offsetY;canvas.style.cursor='grabbing';});
 canvas.addEventListener('mouseup',function(){dragging=false;canvas.style.cursor='grab';});
-canvas.addEventListener('mouseleave',function(){dragging=false;canvas.style.cursor='grab';hovMarina=-1;document.getElementById('mpopup').style.display='none';drawMap();});
-canvas.addEventListener('mousemove',function(e){
-  if(dragging){panX+=e.offsetX-lastX;panY+=e.offsetY-lastY;lastX=e.offsetX;lastY=e.offsetY;document.getElementById('mpopup').style.display='none';drawMap();return;}
-  var found=-1;
-  MARINAS.forEach(function(m,idx){var xy=ll2xy(m.lat,m.lng);var dx=e.offsetX-xy[0],dy=e.offsetY-xy[1];if(dx*dx+dy*dy<100)found=idx;});
-  if(found!==hovMarina){hovMarina=found;drawMap();}
-  var pop=document.getElementById('mpopup');
-  if(found>=0){
-    var m=MARINAS[found];
-    var tags=[];if(m.fuel==='Yes')tags.push('⛽');if(m.wifi==='Yes')tags.push('📶');if(m.lift==='Yes')tags.push('🏗️');
-    document.getElementById('mpName').textContent=m.n;
-    document.getElementById('mpLoc').textContent=m.city+', '+m.country;
-    document.getElementById('mpBerths').textContent=m.b.toLocaleString()+' berths · Max LOA: '+m.loa+'m';
-    document.getElementById('mpTags').innerHTML=tags.map(function(t){return '<span class="mp-tag">'+t+'</span>';}).join('');
-    pop.style.display='block';
-    var px=e.offsetX+14,py=e.offsetY-10;
-    if(px+230>W)px=e.offsetX-240;if(py<0)py=0;
-    pop.style.left=px+'px';pop.style.top=py+'px';
-  }else{pop.style.display='none';}
-});
-canvas.addEventListener('click',function(e){
-  if(hovMarina>=0){
-    var m=MARINAS[hovMarina];
-    var country=COUNTRIES.find(function(c){return c.name===m.country;});
-    if(country)choose(country,true);
-    flyTo(m.lat,m.lng,Math.min(W,H)*0.04);
-    tick(1050,0.13,0.02);
-  }
-});
-canvas.addEventListener('wheel',function(e){
-  e.preventDefault();
-  var f=e.deltaY<0?1.22:1/1.22;
-  panX=e.offsetX-(e.offsetX-panX)*f;panY=e.offsetY-(e.offsetY-panY)*f;scale*=f;drawMap();
-},{passive:false});
-canvas.addEventListener('touchstart',function(e){
-  e.preventDefault();
-  if(e.touches.length===1){dragging=true;var r=canvas.getBoundingClientRect();lastX=e.touches[0].clientX-r.left;lastY=e.touches[0].clientY-r.top;}
-  if(e.touches.length===2){lastTouchDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}
-},{passive:false});
-canvas.addEventListener('touchmove',function(e){
-  e.preventDefault();
-  var r=canvas.getBoundingClientRect();
-  if(e.touches.length===1&&dragging){var cx=e.touches[0].clientX-r.left,cy=e.touches[0].clientY-r.top;panX+=cx-lastX;panY+=cy-lastY;lastX=cx;lastY=cy;drawMap();}
-  if(e.touches.length===2){
-    var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
-    var f=d/lastTouchDist;
-    var mx=(e.touches[0].clientX+e.touches[1].clientX)/2-r.left,my=(e.touches[0].clientY+e.touches[1].clientY)/2-r.top;
-    panX=mx-(mx-panX)*f;panY=my-(my-panY)*f;scale*=f;lastTouchDist=d;drawMap();
-  }
-},{passive:false});
-canvas.addEventListener('touchend',function(e){
-  if(e.changedTouches.length===1){
-    var r=canvas.getBoundingClientRect();
-    var tx=e.changedTouches[0].clientX-r.left,ty=e.changedTouches[0].clientY-r.top;
-    var found=-1;
-    MARINAS.forEach(function(m,idx){var xy=ll2xy(m.lat,m.lng);var dx=tx-xy[0],dy=ty-xy[1];if(dx*dx+dy*dy<144)found=idx;});
-    if(found>=0){var m=MARINAS[found];var country=COUNTRIES.find(function(c){return c.name===m.country;});if(country)choose(country,true);flyTo(m.lat,m.lng,Math.min(W,H)*0.04);tick(1050,0.13,0.02);}
-  }
-  dragging=false;
-});
-
-function buildOpts(q){
-  q=q||'';var dd=document.getElementById('sd');dd.innerHTML='';
-  var list=q?sorted.filter(function(c){return c.name.toLowerCase().indexOf(q.toLowerCase())>-1||c.region.toLowerCase().indexOf(q.toLowerCase())>-1;}):sorted;
-  if(!list.length){dd.innerHTML='<div class="snr">No countries found</div>';return;}
-  list.forEach(function(c){
-    var el=document.createElement('div');el.className='so'+(sel&&sel.code===c.code?' sel':'');
-    var d=uLat!==null?hav(uLat,uLng,c.lat,c.lng):null;
-    var near=d!==null&&d<800?'<span class="onr">Near you</span>':'';
-    var mc=MARINA_MAP[c.name]?MARINA_MAP[c.name].length:0;
-    el.innerHTML='<div class="of"><img src="https://flagcdn.com/w40/'+c.code.toLowerCase()+'.png" onerror="this.outerHTML=\'<span style=font-size:1.1rem>'+c.flag+'</span>\'" loading="lazy"></div>'+
-      '<div class="oi"><div class="on">'+c.name+near+'</div><div class="om">'+c.region+' · '+(mc>0?mc+' marinas listed':c.marinas.toLocaleString()+' marinas')+'</div></div>'+
-      '<span class="oc">'+c.marinas.toLocaleString()+'</span>';
-    el.addEventListener('click',function(e){e.stopPropagation();choose(c);});
-    dd.appendChild(el);
-  });
-}
+canvas.addEventListener('mouseleave',function(){dragging=false;canvas.style.cursor='grab';hovM=-1;document.getElementById('mpop').style.display='none';drawMap();});
+canvas.addEventListener('mousemove',function(e){if(dragging){panX+=e.offsetX-lastX;panY+=e.offsetY-lastY;lastX=e.offsetX;lastY=e.offsetY;document.getElementById('mpop').style.display='none';drawMap();return;}var found=-1;MARINAS.forEach(function(m,idx){var xy=ll(m.lat,m.lng);var dx=e.offsetX-xy[0],dy=e.offsetY-xy[1];if(dx*dx+dy*dy<100)found=idx;});if(found!==hovM){hovM=found;drawMap();}var pop=document.getElementById('mpop');if(found>=0){var m=MARINAS[found];var tags=[];if(m.fuel==='Yes')tags.push('⛽');if(m.wifi==='Yes')tags.push('📶');if(m.lift==='Yes')tags.push('🏗️');document.getElementById('mpN').textContent=m.n;document.getElementById('mpL').textContent=m.city+', '+m.country;document.getElementById('mpB').textContent=m.b.toLocaleString()+' berths · Max LOA: '+m.loa+'m';document.getElementById('mpT').innerHTML=tags.map(function(t){return '<span class="mp-tag">'+t+'</span>';}).join('');pop.style.display='block';var px=e.offsetX+14,py=e.offsetY-10;if(px+230>W)px=e.offsetX-240;if(py<0)py=0;pop.style.left=px+'px';pop.style.top=py+'px';}else{pop.style.display='none';}});
+canvas.addEventListener('click',function(e){if(hovM>=0){var m=MARINAS[hovM];var c=COUNTRIES.find(function(c){return c.name===m.country;});if(c)choose(c,true);flyTo(m.lat,m.lng,Math.min(W,H)*0.04);tick(1050,0.13,0.02);}});
+canvas.addEventListener('wheel',function(e){e.preventDefault();var f=e.deltaY<0?1.22:1/1.22;panX=e.offsetX-(e.offsetX-panX)*f;panY=e.offsetY-(e.offsetY-panY)*f;scale*=f;drawMap();},{passive:false});
+canvas.addEventListener('touchstart',function(e){e.preventDefault();if(e.touches.length===1){dragging=true;var r=canvas.getBoundingClientRect();lastX=e.touches[0].clientX-r.left;lastY=e.touches[0].clientY-r.top;}if(e.touches.length===2){lastTD=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}},{passive:false});
+canvas.addEventListener('touchmove',function(e){e.preventDefault();var r=canvas.getBoundingClientRect();if(e.touches.length===1&&dragging){var cx=e.touches[0].clientX-r.left,cy=e.touches[0].clientY-r.top;panX+=cx-lastX;panY+=cy-lastY;lastX=cx;lastY=cy;drawMap();}if(e.touches.length===2){var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);var f=d/lastTD;var mx=(e.touches[0].clientX+e.touches[1].clientX)/2-r.left,my=(e.touches[0].clientY+e.touches[1].clientY)/2-r.top;panX=mx-(mx-panX)*f;panY=my-(my-panY)*f;scale*=f;lastTD=d;drawMap();}},{passive:false});
+canvas.addEventListener('touchend',function(e){if(e.changedTouches.length===1){var r=canvas.getBoundingClientRect();var tx=e.changedTouches[0].clientX-r.left,ty=e.changedTouches[0].clientY-r.top;var found=-1;MARINAS.forEach(function(m,idx){var xy=ll(m.lat,m.lng);var dx=tx-xy[0],dy=ty-xy[1];if(dx*dx+dy*dy<144)found=idx;});if(found>=0){var m=MARINAS[found];var c=COUNTRIES.find(function(c){return c.name===m.country;});if(c)choose(c,true);flyTo(m.lat,m.lng,Math.min(W,H)*0.04);tick(1050,0.13,0.02);}}dragging=false;});
+function buildOpts(q){q=q||'';var dd=document.getElementById('sd');dd.innerHTML='';var list=q?sorted.filter(function(c){return c.name.toLowerCase().indexOf(q.toLowerCase())>-1||c.region.toLowerCase().indexOf(q.toLowerCase())>-1;}):sorted;if(!list.length){dd.innerHTML='<div class="snr">No countries found</div>';return;}list.forEach(function(c){var el=document.createElement('div');el.className='so'+(sel&&sel.code===c.code?' sel':'');var d=uLat!==null?hav(uLat,uLng,c.lat,c.lng):null;var near=d!==null&&d<800?'<span class="onr">Near you</span>':'';var mc=MARINA_MAP[c.name]?MARINA_MAP[c.name].length:0;el.innerHTML='<div class="of"><img src="https://flagcdn.com/w40/'+c.code.toLowerCase()+'.png" onerror="this.outerHTML=\'<span style=font-size:1.1rem>'+c.flag+'</span>\'" loading="lazy"></div><div class="oi"><div class="on">'+c.name+near+'</div><div class="om">'+c.region+' · '+(mc>0?mc+' marinas listed':c.marinas.toLocaleString()+' marinas')+'</div></div><span class="oc">'+c.marinas.toLocaleString()+'</span>';el.addEventListener('click',function(e){e.stopPropagation();choose(c);});dd.appendChild(el);});}
 function openDrop(){try{getAC();}catch(e){}document.getElementById('sw').classList.add('open');buildOpts(document.getElementById('si').value);}
 function closeDrop(){document.getElementById('sw').classList.remove('open');}
 function filt(q){buildOpts(q);document.getElementById('sw').classList.add('open');}
 document.addEventListener('click',function(e){if(!document.getElementById('sw').contains(e.target))closeDrop();});
 function clr(e){if(e)e.stopPropagation();document.getElementById('si').value='';document.getElementById('sc').style.display='none';document.getElementById('sf').style.display='none';document.getElementById('sf').innerHTML='';sel=null;closePanel();blip();}
-
-function choose(c,fromPin){
-  selSnd();sel=c;
-  document.getElementById('si').value=c.name;
-  document.getElementById('sc').style.display='flex';
-  var sf=document.getElementById('sf');sf.style.display='inline';
-  sf.innerHTML='<img src="https://flagcdn.com/w40/'+c.code.toLowerCase()+'.png" onerror="this.outerHTML=\''+c.flag+'\'" loading="lazy">';
-  closeDrop();
-  document.getElementById('hero').classList.add('gone');
-  if(!fromPin){var z=Math.min(W,H)*0.032*Math.max(1,c.zoom/6);flyTo(c.lat,c.lng,z);}
-  openPanel(c);
-}
-
-function openPanel(c){
-  document.getElementById('pf').innerHTML='<img src="https://flagcdn.com/w80/'+c.code.toLowerCase()+'.png" onerror="this.outerHTML=\'<span style=font-size:1.8rem>'+c.flag+'</span>\'" style="width:34px;height:23px;object-fit:cover;border-radius:3px" loading="lazy">';
-  document.getElementById('pn').textContent=c.name;
-  document.getElementById('pr').textContent=c.region;
-  document.getElementById('pm').textContent=c.marinas.toLocaleString();
-  document.getElementById('pb').textContent=(c.berths/1000).toFixed(0)+'k';
-  buildNav(c);buildList(c);
-  document.getElementById('sp').classList.add('open');
-}
+function choose(c,fromPin){selSnd();sel=c;document.getElementById('si').value=c.name;document.getElementById('sc').style.display='flex';var sf=document.getElementById('sf');sf.style.display='inline';sf.innerHTML='<img src="https://flagcdn.com/w40/'+c.code.toLowerCase()+'.png" onerror="this.outerHTML=\''+c.flag+'\'" loading="lazy">';closeDrop();document.getElementById('hero').classList.add('gone');if(!fromPin){var z=Math.min(W,H)*0.032*Math.max(1,c.zoom/6);flyTo(c.lat,c.lng,z);}openPanel(c);}
+function openPanel(c){document.getElementById('pf').innerHTML='<img src="https://flagcdn.com/w80/'+c.code.toLowerCase()+'.png" onerror="this.outerHTML=\'<span style=font-size:1.8rem>'+c.flag+'</span>\'" style="width:34px;height:23px;object-fit:cover;border-radius:3px" loading="lazy">';document.getElementById('pn').textContent=c.name;document.getElementById('pr').textContent=c.region;document.getElementById('pm').textContent=c.marinas.toLocaleString();document.getElementById('pb').textContent=(c.berths/1000).toFixed(0)+'k';buildNav(c);buildList(c);document.getElementById('sp').classList.add('open');}
 function closePanel(){document.getElementById('sp').classList.remove('open');document.getElementById('hero').classList.remove('gone');blip();}
-function buildList(c){
-  var data=MARINA_MAP[c.name]||[];
-  var el=document.getElementById('ml');
-  if(!data.length){el.innerHTML='<div class="me">⚓<br><br><span style="color:var(--gold)">'+c.marinas.toLocaleString()+' marinas</span> in '+c.name+'<br>Detailed data coming soon</div>';return;}
-  el.innerHTML=data.map(function(m,i){
-    return '<div class="mi" onclick="zoomM('+m.lat+','+m.lng+','+i+')">'+
-      '<div class="md'+(i===0?' a':'')+'"></div>'+
-      '<div class="min2"><div class="mn">'+m.n+'</div><div class="ml2">'+m.city+(m.region?' · '+m.region:'')+'</div></div>'+
-      '<div class="mb">'+m.b.toLocaleString()+' berths</div></div>';
-  }).join('');
-}
-function zoomM(lat,lng,idx){
-  var z=Math.min(W,H)*0.042;flyTo(lat,lng,z);
-  document.querySelectorAll('.mi').forEach(function(el,i){el.classList.toggle('lit',i===idx);if(i===idx)el.scrollIntoView({behavior:'smooth',block:'nearest'});});
-  tick(1020,0.13,0.02);
-}
-function buildNav(c){
-  var idx=sorted.findIndex(function(x){return x.code===c.code;});
-  var prev=sorted[idx-1],next=sorted[idx+1],h='';
-  if(prev){h+='<div class="pnb" onclick="choose('+JSON.stringify(prev)+')"><span>←</span><span class="pnf">'+prev.flag+'</span><span class="pnl">'+prev.name+'</span></div>';}else{h+='<div></div>';}
-  if(next){h+='<div class="pnb" style="justify-content:flex-end" onclick="choose('+JSON.stringify(next)+')"><span class="pnl">'+next.name+'</span><span class="pnf">'+next.flag+'</span><span>→</span></div>';}else{h+='<div></div>';}
-  document.getElementById('pnv').innerHTML=h;
-}
-
+function buildList(c){var data=MARINA_MAP[c.name]||[];var el=document.getElementById('ml');if(!data.length){el.innerHTML='<div class="me">⚓<br><br><span style="color:var(--gold)">'+c.marinas.toLocaleString()+' marinas</span> in '+c.name+'<br>Full data coming soon</div>';return;}el.innerHTML=data.map(function(m,i){return '<div class="mi" onclick="zoomM('+m.lat+','+m.lng+','+i+')">'+'<div class="md'+(i===0?' a':'')+'"></div>'+'<div class="min2"><div class="mn">'+m.n+'</div><div class="ml2">'+m.city+'</div></div>'+'<div class="mb">'+m.b.toLocaleString()+' berths</div></div>';}).join('');}
+function zoomM(lat,lng,idx){var z=Math.min(W,H)*0.042;flyTo(lat,lng,z);document.querySelectorAll('.mi').forEach(function(el,i){el.classList.toggle('lit',i===idx);if(i===idx)el.scrollIntoView({behavior:'smooth',block:'nearest'});});tick(1020,0.13,0.02);}
+function buildNav(c){var idx=sorted.findIndex(function(x){return x.code===c.code;});var prev=sorted[idx-1],next=sorted[idx+1],h='';if(prev){h+='<div class="pnb" onclick="choose('+JSON.stringify(prev)+')"><span>←</span><span class="pnf">'+prev.flag+'</span><span class="pnl">'+prev.name+'</span></div>';}else{h+='<div></div>';}if(next){h+='<div class="pnb" style="justify-content:flex-end" onclick="choose('+JSON.stringify(next)+')"><span class="pnl">'+next.name+'</span><span class="pnf">'+next.flag+'</span><span>→</span></div>';}else{h+='<div></div>';}document.getElementById('pnv').innerHTML=h;}
 function toggleNav(){try{getAC();}catch(e){}var o=document.getElementById('drw').classList.toggle('open');document.getElementById('ov').classList.toggle('open',o);document.getElementById('burger').classList.toggle('open',o);tick(o?800:600,0.1,0.03);}
 function closeNav(){document.getElementById('drw').classList.remove('open');document.getElementById('ov').classList.remove('open');document.getElementById('burger').classList.remove('open');blip();}
 function openPg(id){closeNav();document.getElementById('pgc').innerHTML=PAGES[id]||'<p>Coming soon</p>';document.getElementById('pgm').style.display='block';}
 function closePg(){document.getElementById('pgm').style.display='none';}
-
 function hav(la1,lo1,la2,lo2){var R=6371,dL=(la2-la1)*Math.PI/180,dO=(lo2-lo1)*Math.PI/180,a=Math.sin(dL/2)*Math.sin(dL/2)+Math.cos(la1*Math.PI/180)*Math.cos(la2*Math.PI/180)*Math.sin(dO/2)*Math.sin(dO/2);return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
-function gpsGo(){
-  if(!navigator.geolocation){toast('⚠️','GPS not available');return;}
-  try{getAC();}catch(e){}
-  var btn=document.getElementById('gb');
-  btn.classList.add('loc');toast('📡','Acquiring GPS…');
-  navigator.geolocation.getCurrentPosition(function(pos){
-    uLat=pos.coords.latitude;uLng=pos.coords.longitude;
-    var near=sorted[0],minD=Infinity;
-    sorted.forEach(function(c){var d=hav(uLat,uLng,c.lat,c.lng);if(d<minD){minD=d;near=c;}});
-    btn.classList.remove('loc');btn.classList.add('fnd');
-    chime();toast(near.flag,'Nearest: '+near.name+' (~'+Math.round(minD).toLocaleString()+' km)');
-    drawMap();
-    setTimeout(function(){choose(near);flyTo(near.lat,near.lng,Math.min(W,H)*0.032);},400);
-  },function(){btn.classList.remove('loc');toast('⚠️','Could not get location');},{timeout:10000,enableHighAccuracy:true});
-}
-
+function gpsGo(){if(!navigator.geolocation){toast('⚠️','GPS not available');return;}try{getAC();}catch(e){}var btn=document.getElementById('gb');btn.classList.add('loc');toast('📡','Acquiring GPS…');navigator.geolocation.getCurrentPosition(function(pos){uLat=pos.coords.latitude;uLng=pos.coords.longitude;var near=sorted[0],minD=Infinity;sorted.forEach(function(c){var d=hav(uLat,uLng,c.lat,c.lng);if(d<minD){minD=d;near=c;}});btn.classList.remove('loc');btn.classList.add('fnd');chime();toast(near.flag,'Nearest: '+near.name+' (~'+Math.round(minD).toLocaleString()+' km)');drawMap();setTimeout(function(){choose(near);flyTo(near.lat,near.lng,Math.min(W,H)*0.032);},400);},function(){btn.classList.remove('loc');toast('⚠️','Could not get location');},{timeout:10000,enableHighAccuracy:true});}
 var tT;
 function toast(flag,msg){var t=document.getElementById('toast');document.getElementById('tf').textContent=flag;document.getElementById('tm').textContent=msg;t.classList.add('show');clearTimeout(tT);tT=setTimeout(function(){t.classList.remove('show');},3500);}
-
-document.addEventListener('keydown',function(e){
-  if(e.key==='Escape'){closeDrop();closePanel();closeNav();closePg();}
-  if(e.key==='+'||e.key==='=')zoom(1.3);
-  if(e.key==='-')zoom(1/1.3);
-  if(e.key==='Enter'&&document.activeElement.id==='si'){var q=document.getElementById('si').value.toLowerCase();var m=sorted.find(function(c){return c.name.toLowerCase().indexOf(q)===0;});if(m)choose(m);}
-});
-
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeDrop();closePanel();closeNav();closePg();}if(e.key==='+'||e.key==='=')zoom(1.3);if(e.key==='-')zoom(1/1.3);if(e.key==='Enter'&&document.activeElement.id==='si'){var q=document.getElementById('si').value.toLowerCase();var m=sorted.find(function(c){return c.name.toLowerCase().indexOf(q)===0;});if(m)choose(m);}});
 buildOpts();
 window.addEventListener('resize',resize);
-window.addEventListener('load',function(){setTimeout(resize,50);;});
+window.addEventListener('load',function(){setTimeout(resize,50);});
 resize();
 </script>
 </body>
